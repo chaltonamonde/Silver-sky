@@ -386,7 +386,7 @@ function initCommandPalette() {
     results.innerHTML = items.slice(0, 10).map((item, idx) => `
       <div class="cmd-item" data-idx="${idx}">
         <div style="display: flex; align-items: center; gap: 0.65rem;">
-          <span style="font-size: 0.65rem; padding: 0.15rem 0.4rem; border-radius: 4px; background: rgba(59,130,246,0.25); color: #93c5fd; font-weight: 700;">${item.category}</span>
+          <span style="font-size: 0.65rem; padding: 0.15rem 0.4rem; border-radius: 4px; background: var(--sky-soft); color: var(--sky-deep); font-weight: 700;">${item.category}</span>
           <span style="font-weight: 600;">${item.title}</span>
         </div>
         <span style="font-size: 0.7rem; color: var(--slate-400);">Jump →</span>
@@ -458,10 +458,10 @@ function openLeadDrawer(lead) {
   ];
 
   body.innerHTML = `
-    <div style="background: rgba(15,23,42,0.6); padding: 1.25rem; border-radius: var(--radius-sm); border: 1px solid var(--admin-border);">
+    <div style="background: var(--surface); padding: 1.25rem; border-radius: var(--radius-sm); border: 1px solid var(--border);">
       <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
         <div>
-          <h3 style="font-size: 1.25rem; color: #fff; font-family: var(--font-serif);">${lead.clientName}</h3>
+          <h3 style="font-size: 1.25rem; color: var(--ink); font-family: var(--font-serif);">${lead.clientName}</h3>
           <div style="font-size: 0.75rem; color: var(--candlelight-amber);">${lead.eventType} • ${lead.region}</div>
         </div>
         <span class="status-pill status-${lead.status.toLowerCase().replace(/\s+/g, '-')}">${lead.status}</span>
@@ -476,11 +476,11 @@ function openLeadDrawer(lead) {
     </div>
 
     <!-- Financial Breakdown -->
-    <div style="background: rgba(15,39,108,0.25); padding: 1.25rem; border-radius: var(--radius-sm); border: 1px solid rgba(59,130,246,0.25);">
-      <h4 style="font-size: 0.9rem; color: #fff; margin-bottom: 0.75rem;">Financial Breakdown & Escrow</h4>
+    <div style="background: var(--bg-alt); padding: 1.25rem; border-radius: var(--radius-sm); border: 1px solid var(--border);">
+      <h4 style="font-size: 0.9rem; color: var(--ink); margin-bottom: 0.75rem;">Financial Breakdown & Escrow</h4>
       <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.85rem;">
         <span style="color: var(--slate-300);">Estimated Production Budget:</span>
-        <strong style="color: #fff;">KES ${lead.estimatedKES.toLocaleString()}</strong>
+        <strong style="color: var(--ink);">KES ${lead.estimatedKES.toLocaleString()}</strong>
       </div>
       <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.85rem;">
         <span style="color: var(--slate-300);">40% Daraja Deposit Required:</span>
@@ -498,8 +498,8 @@ function openLeadDrawer(lead) {
     </div>
 
     <!-- Notes & Interaction Log -->
-    <div style="background: rgba(15,23,42,0.6); padding: 1.25rem; border-radius: var(--radius-sm); border: 1px solid var(--admin-border);">
-      <h4 style="font-size: 0.9rem; color: #fff; margin-bottom: 0.5rem;">Director Activity & Follow-Up Log</h4>
+    <div style="background: var(--surface); padding: 1.25rem; border-radius: var(--radius-sm); border: 1px solid var(--border);">
+      <h4 style="font-size: 0.9rem; color: var(--ink); margin-bottom: 0.5rem;">Director Activity & Follow-Up Log</h4>
       <div class="note-timeline" id="drawer-notes-container">
         ${notesList.map(n => `
           <div class="note-item">
@@ -521,7 +521,7 @@ function openLeadDrawer(lead) {
     <!-- Operations Controls -->
     <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-top: 0.5rem;">
       <label style="font-size: 0.75rem; color: var(--slate-400); font-weight: 700;">UPDATE STATUS:</label>
-      <select id="drawer-status-select" class="form-input" style="background: #020617; color: #fff; border: 1px solid var(--admin-border-bright);">
+      <select id="drawer-status-select" class="form-input" style="background: var(--surface); color: var(--ink); border: 1px solid var(--border);">
         <option value="New" ${lead.status === 'New' ? 'selected' : ''}>New</option>
         <option value="In Discussion" ${lead.status === 'In Discussion' ? 'selected' : ''}>In Discussion</option>
         <option value="Deposit Pending" ${lead.status === 'Deposit Pending' ? 'selected' : ''}>Deposit Pending</option>
@@ -529,7 +529,7 @@ function openLeadDrawer(lead) {
       </select>
 
       <label style="font-size: 0.75rem; color: var(--slate-400); font-weight: 700; margin-top: 0.25rem;">PRE-BUILT WHATSAPP TEMPLATES:</label>
-      <select id="drawer-wa-template-select" class="form-input" style="background: #020617; color: #fff; font-size: 0.75rem;">
+      <select id="drawer-wa-template-select" class="form-input" style="background: var(--surface); color: var(--ink); border: 1px solid var(--border); font-size: 0.75rem;">
         <option value="intro">1. Initial VIP Introduction & Availability</option>
         <option value="inspection">2. Free On-Site Technical Inspection</option>
         <option value="escrow">3. 40% Escrow Deposit & Calendar Lock</option>
@@ -623,29 +623,29 @@ function openProposalModal(lead) {
   content.innerHTML = `
     <div class="official-receipt-sheet">
       <!-- Header -->
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #0f276c; padding-bottom: 1rem; margin-bottom: 1.25rem;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid var(--sky-deep); padding-bottom: 1rem; margin-bottom: 1.25rem;">
         <div>
-          <div style="font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: #0a1744;">SILVER SKY EVENTS</div>
-          <div style="font-size: 0.75rem; color: #64748b;">Luxury Decor, Clear Marquees & Heavy Infrastructure</div>
-          <div style="font-size: 0.7rem; color: #64748b;">Karen Office Park • +254 700 123 456 • concierge@silverskyevents.co.ke</div>
+          <div style="font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: var(--ink);">SILVER SKY EVENTS</div>
+          <div style="font-size: 0.75rem; color: var(--ink-muted);">Luxury Decor, Clear Marquees & Heavy Infrastructure</div>
+          <div style="font-size: 0.7rem; color: var(--ink-muted);">Karen Office Park • +254 700 123 456 • concierge@silverskyevents.co.ke</div>
         </div>
         <div style="text-align: right;">
-          <span style="background: #0f276c; color: #fff; font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 4px;">OFFICIAL ESTIMATE</span>
-          <div style="font-family: monospace; font-size: 0.85rem; font-weight: 700; color: #0a1744; margin-top: 0.35rem;">${quoteRef}</div>
-          <div style="font-size: 0.7rem; color: #64748b;">Date: ${new Date().toLocaleDateString('en-GB')}</div>
+          <span style="background: var(--sky-deep); color: var(--surface); font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 4px;">OFFICIAL ESTIMATE</span>
+          <div style="font-family: monospace; font-size: 0.85rem; font-weight: 700; color: var(--ink); margin-top: 0.35rem;">${quoteRef}</div>
+          <div style="font-size: 0.7rem; color: var(--ink-muted);">Date: ${new Date().toLocaleDateString('en-GB')}</div>
         </div>
       </div>
 
       <!-- Client & Event Info -->
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem; font-size: 0.8rem; background: #f8fafc; padding: 1rem; border-radius: 6px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem; font-size: 0.8rem; background: var(--bg-alt); padding: 1rem; border-radius: 6px;">
         <div>
-          <div style="font-size: 0.7rem; color: #64748b; text-transform: uppercase;">Prepared For:</div>
-          <div style="font-weight: 700; font-size: 0.95rem; color: #0f172a;">${lead.clientName}</div>
+          <div style="font-size: 0.7rem; color: var(--ink-muted); text-transform: uppercase;">Prepared For:</div>
+          <div style="font-weight: 700; font-size: 0.95rem; color: var(--ink);">${lead.clientName}</div>
           <div>📞 ${lead.phone} | ✉️ ${lead.email}</div>
         </div>
         <div>
-          <div style="font-size: 0.7rem; color: #64748b; text-transform: uppercase;">Event Specifications:</div>
-          <div style="font-weight: 700; color: #0f172a;">${lead.eventType} (${lead.guestCount} Guests)</div>
+          <div style="font-size: 0.7rem; color: var(--ink-muted); text-transform: uppercase;">Event Specifications:</div>
+          <div style="font-weight: 700; color: var(--ink);">${lead.eventType} (${lead.guestCount} Guests)</div>
           <div>📍 ${lead.venue} • Target: ${lead.targetDate}</div>
         </div>
       </div>
@@ -653,37 +653,37 @@ function openProposalModal(lead) {
       <!-- Quotation Breakdown Table -->
       <table style="width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-bottom: 1.25rem;">
         <thead>
-          <tr style="background: #0f276c; color: #fff; text-align: left;">
+          <tr style="background: var(--sky-deep); color: var(--surface); text-align: left;">
             <th style="padding: 0.5rem 0.75rem;">Item Description</th>
             <th style="padding: 0.5rem 0.75rem; text-align: right;">Amount (KES)</th>
           </tr>
         </thead>
         <tbody>
-          <tr style="border-bottom: 1px solid #e2e8f0;">
+          <tr style="border-bottom: 1px solid var(--border);">
             <td style="padding: 0.6rem 0.75rem;">
               <strong>Signature Clear-Span German Marquee & Structural Sub-Flooring</strong>
-              <div style="font-size: 0.7rem; color: #64748b;">Complete weather-sealed PVC roof, crystal chandelier array, champagne velvet draping.</div>
+              <div style="font-size: 0.7rem; color: var(--ink-muted);">Complete weather-sealed PVC roof, crystal chandelier array, champagne velvet draping.</div>
             </td>
             <td style="padding: 0.6rem 0.75rem; text-align: right; font-weight: 700;">KES ${(Math.round(lead.estimatedKES * 0.45)).toLocaleString()}</td>
           </tr>
-          <tr style="border-bottom: 1px solid #e2e8f0;">
+          <tr style="border-bottom: 1px solid var(--border);">
             <td style="padding: 0.6rem 0.75rem;">
               <strong>Twin Synchronized 150 kVA Silent Cummins Generator Backup</strong>
-              <div style="font-size: 0.7rem; color: #64748b;">Auto-changeover system, marine cabling distribution, certified diesel engineer on-site.</div>
+              <div style="font-size: 0.7rem; color: var(--ink-muted);">Auto-changeover system, marine cabling distribution, certified diesel engineer on-site.</div>
             </td>
             <td style="padding: 0.6rem 0.75rem; text-align: right; font-weight: 700;">KES ${(Math.round(lead.estimatedKES * 0.2)).toLocaleString()}</td>
           </tr>
-          <tr style="border-bottom: 1px solid #e2e8f0;">
+          <tr style="border-bottom: 1px solid var(--border);">
             <td style="padding: 0.6rem 0.75rem;">
               <strong>L-Acoustics Kiva II Concert Sound & Intelligent Lighting Rigging</strong>
-              <div style="font-size: 0.7rem; color: #64748b;">Shure Axient Digital microphones, Martin MAC Quantum moving heads, stage wash.</div>
+              <div style="font-size: 0.7rem; color: var(--ink-muted);">Shure Axient Digital microphones, Martin MAC Quantum moving heads, stage wash.</div>
             </td>
             <td style="padding: 0.6rem 0.75rem; text-align: right; font-weight: 700;">KES ${(Math.round(lead.estimatedKES * 0.2)).toLocaleString()}</td>
           </tr>
-          <tr style="border-bottom: 1px solid #e2e8f0;">
+          <tr style="border-bottom: 1px solid var(--border);">
             <td style="padding: 0.6rem 0.75rem;">
               <strong>VIP Tablescaping, Mirror Dancefloor & Executive Production Management</strong>
-              <div style="font-size: 0.7rem; color: #64748b;">Assigned Senior Event Director, 24/7 technical crew dispatch.</div>
+              <div style="font-size: 0.7rem; color: var(--ink-muted);">Assigned Senior Event Director, 24/7 technical crew dispatch.</div>
             </td>
             <td style="padding: 0.6rem 0.75rem; text-align: right; font-weight: 700;">KES ${(lead.estimatedKES - Math.round(lead.estimatedKES * 0.85)).toLocaleString()}</td>
           </tr>
@@ -691,17 +691,17 @@ function openProposalModal(lead) {
       </table>
 
       <!-- Totals & Escrow Terms -->
-      <div style="display: flex; justify-content: space-between; align-items: flex-end; border-top: 2px solid #0f276c; padding-top: 1rem;">
-        <div style="font-size: 0.75rem; color: #64748b; max-width: 320px;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; border-top: 2px solid var(--sky-deep); padding-top: 1rem;">
+        <div style="font-size: 0.75rem; color: var(--ink-muted); max-width: 320px;">
           <div><strong>Payment Escrow Terms:</strong></div>
           <div>• 40% initial deposit required to reserve date.</div>
           <div>• Safaricom Paybill: <strong>782910</strong> | Account: <strong>${quoteRef}</strong></div>
           <div>• All funds held in audited Silver Sky escrow account.</div>
         </div>
         <div style="text-align: right;">
-          <div style="font-size: 0.75rem; color: #64748b;">Total Production Value:</div>
-          <div style="font-size: 1.4rem; font-weight: 800; color: #0a1744;">KES ${lead.estimatedKES.toLocaleString()}</div>
-          <div style="font-size: 0.8rem; font-weight: 700; color: #059669;">40% Deposit to Lock: KES ${lead.depositKES.toLocaleString()}</div>
+          <div style="font-size: 0.75rem; color: var(--ink-muted);">Total Production Value:</div>
+          <div style="font-size: 1.4rem; font-weight: 800; color: var(--ink);">KES ${lead.estimatedKES.toLocaleString()}</div>
+          <div style="font-size: 0.8rem; font-weight: 700; color: #047857;">40% Deposit to Lock: KES ${lead.depositKES.toLocaleString()}</div>
         </div>
       </div>
     </div>
@@ -727,44 +727,44 @@ function openReceiptModal(tx) {
       <!-- Safaricom Header -->
       <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #009b3a; padding-bottom: 0.75rem; margin-bottom: 1.25rem;">
         <div style="display: flex; align-items: center; gap: 0.75rem;">
-          <div style="background: #009b3a; color: #fff; font-weight: 900; font-size: 1rem; padding: 0.4rem 0.75rem; border-radius: 4px;">
+          <div style="background: #009b3a; color: var(--surface); font-weight: 900; font-size: 1rem; padding: 0.4rem 0.75rem; border-radius: 4px;">
             M-PESA
           </div>
           <div>
-            <div style="font-weight: 800; font-size: 1.1rem; color: #0f172a;">SAFARICOM DARAJA ESCROW RECEIPT</div>
-            <div style="font-size: 0.7rem; color: #64748b;">Paybill: <strong>782910</strong> • Silver Sky Events & Infrastructure Ltd</div>
+            <div style="font-weight: 800; font-size: 1.1rem; color: var(--ink);">SAFARICOM DARAJA ESCROW RECEIPT</div>
+            <div style="font-size: 0.7rem; color: var(--ink-muted);">Paybill: <strong>782910</strong> • Silver Sky Events & Infrastructure Ltd</div>
           </div>
         </div>
         <span style="background: #dcfce7; color: #166534; font-weight: 700; font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 4px;">VERIFIED PAID</span>
       </div>
 
       <!-- Details Grid -->
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.8rem; margin-bottom: 1.5rem; background: #f8fafc; padding: 1rem; border-radius: 6px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.8rem; margin-bottom: 1.5rem; background: var(--bg-alt); padding: 1rem; border-radius: 6px;">
         <div>
-          <div style="font-size: 0.7rem; color: #64748b;">RECEIPT NUMBER:</div>
-          <div style="font-family: monospace; font-size: 1.1rem; font-weight: 800; color: #0f172a;">${tx.receiptNumber}</div>
+          <div style="font-size: 0.7rem; color: var(--ink-muted);">RECEIPT NUMBER:</div>
+          <div style="font-family: monospace; font-size: 1.1rem; font-weight: 800; color: var(--ink);">${tx.receiptNumber}</div>
         </div>
         <div>
-          <div style="font-size: 0.7rem; color: #64748b;">BOOKING REFERENCE:</div>
-          <div style="font-family: monospace; font-size: 1rem; font-weight: 700; color: #2563eb;">${tx.bookingRef}</div>
+          <div style="font-size: 0.7rem; color: var(--ink-muted);">BOOKING REFERENCE:</div>
+          <div style="font-family: monospace; font-size: 1rem; font-weight: 700; color: var(--sky-deep);">${tx.bookingRef}</div>
         </div>
         <div>
-          <div style="font-size: 0.7rem; color: #64748b;">CLIENT NAME & PHONE:</div>
-          <div style="font-weight: 700; color: #0f172a;">${tx.clientName}</div>
-          <div style="color: #64748b;">${tx.phone}</div>
+          <div style="font-size: 0.7rem; color: var(--ink-muted);">CLIENT NAME & PHONE:</div>
+          <div style="font-weight: 700; color: var(--ink);">${tx.clientName}</div>
+          <div style="color: var(--ink-muted);">${tx.phone}</div>
         </div>
         <div>
-          <div style="font-size: 0.7rem; color: #64748b;">TRANSACTION TIMESTAMP:</div>
-          <div style="font-weight: 600; color: #0f172a;">${tx.timestamp}</div>
-          <div style="color: #64748b;">Channel: ${tx.channel}</div>
+          <div style="font-size: 0.7rem; color: var(--ink-muted);">TRANSACTION TIMESTAMP:</div>
+          <div style="font-weight: 600; color: var(--ink);">${tx.timestamp}</div>
+          <div style="color: var(--ink-muted);">Channel: ${tx.channel}</div>
         </div>
       </div>
 
       <!-- Amount Box -->
-      <div style="background: #064e3b; color: #fff; padding: 1.25rem; border-radius: 6px; text-align: center; margin-bottom: 1.25rem;">
-        <div style="font-size: 0.75rem; text-transform: uppercase; color: #a7f3d0;">Amount Credited to Escrow:</div>
+      <div style="background: var(--sky-deep); color: var(--surface); padding: 1.25rem; border-radius: 6px; text-align: center; margin-bottom: 1.25rem;">
+        <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--sky-soft);">Amount Credited to Escrow:</div>
         <div style="font-size: 2rem; font-weight: 800; margin: 0.25rem 0;">KES ${tx.amountKES.toLocaleString()}</div>
-        <div style="font-size: 0.75rem; color: #d1fae5;">For: ${tx.packageName} (${tx.serviceCategory})</div>
+        <div style="font-size: 0.75rem; color: var(--surface);">For: ${tx.packageName} (${tx.serviceCategory})</div>
       </div>
 
       <!-- QR & Verification Footer -->
@@ -831,9 +831,9 @@ function renderKPICards() {
   const matrixContainer = document.getElementById('overview-fleet-matrix');
   if (matrixContainer) {
     matrixContainer.innerHTML = inventory.slice(0, 4).map(inv => `
-      <div style="background: rgba(15,23,42,0.6); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--admin-border);">
+      <div style="background: var(--surface); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border);">
         <div style="font-size: 0.7rem; color: var(--slate-400); text-transform: uppercase;">${inv.category}</div>
-        <div style="font-size: 1.15rem; font-weight: 700; color: #fff; margin: 0.25rem 0;">${inv.quantityDeployed} / ${inv.quantityTotal} deployed</div>
+        <div style="font-size: 1.15rem; font-weight: 700; color: var(--ink); margin: 0.25rem 0;">${inv.quantityDeployed} / ${inv.quantityTotal} deployed</div>
         <div style="font-size: 0.7rem; color: ${inv.status === 'Operational' ? 'var(--emerald-500)' : 'var(--candlelight-amber)'};">
           ● ${inv.name} (${inv.location})
         </div>
@@ -860,7 +860,7 @@ function renderLeadsTable() {
   const generateRow = (lead) => `
     <tr>
       <td>
-        <div style="font-weight: 700; color: #fff;">${lead.clientName}</div>
+        <div style="font-weight: 700; color: var(--ink);">${lead.clientName}</div>
         <div style="font-size: 0.725rem; color: var(--slate-400);">${lead.phone} • ${lead.email}</div>
       </td>
       <td>
@@ -868,7 +868,7 @@ function renderLeadsTable() {
         <div style="font-size: 0.725rem; color: var(--candlelight-amber);">${lead.venue} (${lead.guestCount} Pax)</div>
       </td>
       <td>
-        <div style="font-weight: 700; color: #fff;">KES ${lead.estimatedKES.toLocaleString()}</div>
+        <div style="font-weight: 700; color: var(--ink);">KES ${lead.estimatedKES.toLocaleString()}</div>
         <div style="font-size: 0.7rem; color: var(--emerald-500);">Deposit: KES ${lead.depositKES.toLocaleString()}</div>
       </td>
       <td>
@@ -966,11 +966,11 @@ function renderTransactionsTable() {
   const generateRow = (tx) => `
     <tr>
       <td>
-        <strong style="color: #60a5fa; font-family: monospace;">${tx.receiptNumber}</strong>
+        <strong style="color: var(--sky-deep); font-family: monospace;">${tx.receiptNumber}</strong>
         <div style="font-size: 0.7rem; color: var(--slate-400);">${tx.bookingRef}</div>
       </td>
       <td>
-        <div style="font-weight: 700; color: #fff;">${tx.clientName}</div>
+        <div style="font-weight: 700; color: var(--ink);">${tx.clientName}</div>
         <div style="font-size: 0.7rem; color: var(--slate-400);">${tx.phone}</div>
       </td>
       <td>
@@ -1015,11 +1015,11 @@ function renderInventoryTable() {
     <tr>
       <td><strong style="font-family: monospace; color: var(--candlelight-amber);">${item.assetCode}</strong></td>
       <td>
-        <div style="font-weight: 700; color: #fff;">${item.name}</div>
+        <div style="font-weight: 700; color: var(--ink);">${item.name}</div>
         <div style="font-size: 0.7rem; color: var(--slate-400);">${item.category}</div>
       </td>
       <td>
-        <div style="font-weight: 700; color: #fff;">${item.quantityDeployed} / ${item.quantityTotal} deployed</div>
+        <div style="font-weight: 700; color: var(--ink);">${item.quantityDeployed} / ${item.quantityTotal} deployed</div>
         <div style="font-size: 0.7rem; color: var(--slate-400);">${item.quantityTotal - item.quantityDeployed} units on standby</div>
       </td>
       <td>
@@ -1028,7 +1028,7 @@ function renderInventoryTable() {
       </td>
       <td>
         <div style="display: flex; gap: 0.35rem; align-items: center;">
-          <button class="status-pill status-${item.status.toLowerCase().replace(/\s+/g, '-')} toggle-asset-status-btn" data-id="${item.id}" style="cursor: pointer; border: 1px dashed rgba(255,255,255,0.3);" title="Click to cycle status">
+          <button class="status-pill status-${item.status.toLowerCase().replace(/\s+/g, '-')} toggle-asset-status-btn" data-id="${item.id}" style="cursor: pointer; border: 1px dashed var(--border);" title="Click to cycle status">
             ${item.status} ↻
           </button>
           <button class="btn btn-glass delete-asset-btn" data-id="${item.id}" style="padding: 0.25rem 0.5rem; font-size: 0.7rem; color: #f87171;" title="Delete Asset">
@@ -1074,15 +1074,15 @@ function renderCalendarTable() {
   tbody.innerHTML = calendar.map(item => `
     <tr>
       <td>
-        <strong style="color: #60a5fa;">${item.date}</strong>
+        <strong style="color: var(--sky-deep);">${item.date}</strong>
         <div style="font-size: 0.7rem; color: var(--slate-400);">to ${item.endDate}</div>
       </td>
       <td>
-        <div style="font-weight: 700; color: #fff;">${item.title}</div>
+        <div style="font-weight: 700; color: var(--ink);">${item.title}</div>
         <div style="font-size: 0.725rem; color: var(--candlelight-amber);">${item.venue} (${item.guests} Pax)</div>
       </td>
       <td>
-        <div style="font-size: 0.8rem; color: #fff;">Lead: <strong>${item.leadDirector}</strong></div>
+        <div style="font-size: 0.8rem; color: var(--ink);">Lead: <strong>${item.leadDirector}</strong></div>
         <div style="font-size: 0.7rem; color: var(--slate-400);">${item.packageType}</div>
       </td>
       <td style="font-size: 0.75rem; color: var(--slate-300);">
@@ -1169,7 +1169,7 @@ function renderPackagesGrid() {
       <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
         <div>
           <span class="admin-brand-badge">${pkg.tier}</span>
-          <h3 style="font-size: 1.2rem; color: #fff; font-family: var(--font-serif); margin-top: 0.35rem;">${pkg.name}</h3>
+          <h3 style="font-size: 1.2rem; color: var(--ink); font-family: var(--font-serif); margin-top: 0.35rem;">${pkg.name}</h3>
         </div>
         <div style="text-align: right;">
           <div style="font-size: 1.15rem; font-weight: 700; color: var(--candlelight-amber);">${pkg.formattedPrice}</div>
@@ -1266,18 +1266,18 @@ function renderPortfolioGrid() {
   if (!container) return;
 
   container.innerHTML = portfolio.map(item => `
-    <div style="background: rgba(15,23,42,0.6); border-radius: var(--radius-sm); border: 1px solid var(--admin-border); overflow: hidden; display: flex; flex-direction: column;">
+    <div style="background: var(--surface); border-radius: var(--radius-sm); border: 1px solid var(--border); overflow: hidden; display: flex; flex-direction: column;">
       <div style="height: 140px; background-image: url('${item.imageUrl}'); background-size: cover; background-position: center; position: relative;">
         <span class="status-pill ${item.status === 'Published' ? 'status-confirmed' : 'status-in-discussion'}" style="position: absolute; top: 0.5rem; right: 0.5rem;">
           ${item.status}
         </span>
       </div>
       <div style="padding: 1rem; flex: 1; display: flex; flex-direction: column;">
-        <div style="font-weight: 700; color: #fff; font-size: 0.95rem;">${item.title}</div>
+        <div style="font-weight: 700; color: var(--ink); font-size: 0.95rem;">${item.title}</div>
         <div style="font-size: 0.7rem; color: var(--candlelight-amber); margin-bottom: 0.5rem;">${item.venue} (${item.guests} VIPs)</div>
         <p style="font-size: 0.725rem; color: var(--slate-300); margin-bottom: 1rem; line-height: 1.4; flex: 1;">${item.storyNarrative}</p>
 
-        <div style="display: flex; gap: 0.4rem; border-top: 1px solid var(--admin-border); padding-top: 0.75rem;">
+        <div style="display: flex; gap: 0.4rem; border-top: 1px solid var(--border); padding-top: 0.75rem;">
           <button class="btn btn-glass toggle-publish-btn" data-id="${item.id}" style="flex: 1; padding: 0.35rem; font-size: 0.7rem;">
             ${item.status === 'Published' ? 'Unpublish' : 'Publish'}
           </button>
@@ -1322,11 +1322,11 @@ function renderRegionalSEOTable() {
   tbody.innerHTML = regionalSEO.map(reg => `
     <tr>
       <td>
-        <strong style="color: #fff;">${reg.city}</strong>
+        <strong style="color: var(--ink);">${reg.city}</strong>
         <div style="font-size: 0.7rem; color: var(--slate-400);">${reg.county}</div>
       </td>
       <td>
-        <div style="font-weight: 700; color: #60a5fa;">${reg.monthlyImpressions.toLocaleString()}</div>
+        <div style="font-weight: 700; color: var(--sky-deep);">${reg.monthlyImpressions.toLocaleString()}</div>
         <div style="font-size: 0.7rem; color: var(--slate-400);">${reg.organicClicks.toLocaleString()} Clicks (${reg.ctrPct}%)</div>
       </td>
       <td>
@@ -1395,14 +1395,14 @@ function renderAnalyticsCharts() {
     return;
   }
 
-  // Configure Chart.js global dark theme defaults
-  Chart.defaults.color = '#94a3b8';
+  // Configure Chart.js global theme defaults
+  Chart.defaults.color = '#5C6B79';
   Chart.defaults.font.family = "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif";
-  Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.08)';
+  Chart.defaults.borderColor = 'rgba(221, 213, 195, 0.6)';
 
   // 1. Service Categories Breakdown
   const catNames = ['Weddings', 'Corporate Contracts', 'Equipment Hire', 'Decor Styling'];
-  const catColors = ['#10b981', '#2563eb', '#38bdf8', '#f43f5e'];
+  const catColors = ['#10b981', '#5F8FB3', '#8FB8D6', '#D9A86C'];
 
   const catEscrow = {};
   const catPipeline = {};
@@ -1460,7 +1460,7 @@ function renderAnalyticsCharts() {
           <div style="display: flex; align-items: center; gap: 0.5rem;">
             <span style="width: 10px; height: 10px; border-radius: 50%; background: ${catColors[i]};"></span>
             <div>
-              <div style="color: #fff; font-weight: 600;">${c}</div>
+              <div style="color: var(--ink); font-weight: 600;">${c}</div>
               <div style="font-size: 0.68rem; color: var(--slate-400);">${pct}% of Escrow</div>
             </div>
           </div>
@@ -1487,7 +1487,7 @@ function renderAnalyticsCharts() {
         datasets: [{
           data: catNames.map(c => catEscrow[c]),
           backgroundColor: catColors,
-          borderColor: '#060e28',
+          borderColor: '#FBF8F1',
           borderWidth: 2,
           hoverOffset: 6
         }]
@@ -1571,7 +1571,7 @@ function renderAnalyticsCharts() {
           {
             label: 'Pending Contract Balance',
             data: pkgNames.map(p => pkgPipeline[p]),
-            backgroundColor: '#f59e0b',
+            backgroundColor: '#D9A86C',
             borderRadius: 4,
             barPercentage: 0.7,
             categoryPercentage: 0.8
@@ -1595,7 +1595,7 @@ function renderAnalyticsCharts() {
             ticks: { font: { size: 11 }, maxRotation: 0 }
           },
           y: {
-            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+            grid: { color: 'rgba(44, 62, 80, 0.08)' },
             ticks: {
               callback: (v) => 'KES ' + (v / 1000000).toFixed(1) + 'M',
               font: { size: 10 }
@@ -1615,8 +1615,8 @@ function renderAnalyticsCharts() {
     const ctx = trajectoryCanvas.getContext('2d');
 
     const grad = ctx.createLinearGradient(0, 0, 0, 260);
-    grad.addColorStop(0, 'rgba(56, 189, 248, 0.35)');
-    grad.addColorStop(1, 'rgba(56, 189, 248, 0.00)');
+    grad.addColorStop(0, 'rgba(143, 184, 214, 0.35)');
+    grad.addColorStop(1, 'rgba(143, 184, 214, 0.00)');
 
     const months = MONTHLY_RECOVERY_DATA.map(d => d.month);
     const actuals = MONTHLY_RECOVERY_DATA.map(d => d.actualRecovered);
@@ -1649,12 +1649,12 @@ function renderAnalyticsCharts() {
           {
             label: 'Actual Escrow Recovered',
             data: actuals,
-            borderColor: '#38bdf8',
+            borderColor: '#5F8FB3',
             backgroundColor: grad,
             fill: true,
             tension: 0.35,
-            pointBackgroundColor: '#38bdf8',
-            pointBorderColor: '#0b194d',
+            pointBackgroundColor: '#5F8FB3',
+            pointBorderColor: '#FBF8F1',
             pointBorderWidth: 2,
             pointRadius: 4,
             pointHoverRadius: 7
@@ -1662,7 +1662,7 @@ function renderAnalyticsCharts() {
           {
             label: `Target Benchmark (${activeBenchmarkLabel})`,
             data: targets,
-            borderColor: '#94a3b8',
+            borderColor: '#DDD5C3',
             borderDash: [6, 4],
             pointRadius: 0,
             fill: false,
@@ -1687,7 +1687,7 @@ function renderAnalyticsCharts() {
             ticks: { font: { size: 10 } }
           },
           y: {
-            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+            grid: { color: 'rgba(44, 62, 80, 0.08)' },
             ticks: {
               callback: (v) => 'KES ' + (v / 1000000).toFixed(1) + 'M',
               font: { size: 10 }
@@ -1717,10 +1717,10 @@ function renderAnalyticsCharts() {
           label: 'Conversions',
           data: stageCounts,
           backgroundColor: [
-            '#2563eb',
-            '#0284c7',
+            '#5F8FB3',
+            '#8FB8D6',
             '#0d9488',
-            '#f59e0b',
+            '#D9A86C',
             '#10b981'
           ],
           borderRadius: 4,
@@ -1746,7 +1746,7 @@ function renderAnalyticsCharts() {
         },
         scales: {
           x: {
-            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+            grid: { color: 'rgba(44, 62, 80, 0.08)' },
             ticks: {
               callback: (v) => v >= 1000 ? (v / 1000).toFixed(0) + 'k' : v,
               font: { size: 10 }
@@ -1828,16 +1828,16 @@ function renderFollowupMatrix() {
     return `
       <tr>
         <td>
-          <div style="font-weight: 700; color: #fff;">${lead.clientName}</div>
+          <div style="font-weight: 700; color: var(--ink);">${lead.clientName}</div>
           <div style="font-size: 0.72rem; color: var(--candlelight-amber);">${lead.eventType} @ ${lead.venue}</div>
           <div style="font-size: 0.68rem; color: var(--slate-400);">${lead.guestCount} Pax • Target: ${lead.targetDate}</div>
         </td>
         <td>
-          <div style="font-weight: 600; color: #fff;">${pkg}</div>
+          <div style="font-weight: 600; color: var(--ink);">${pkg}</div>
           <div style="font-size: 0.7rem; color: var(--slate-400);">${serviceCat}</div>
         </td>
         <td>
-          <div style="font-weight: 700; color: #fff;">KES ${lead.estimatedKES.toLocaleString()}</div>
+          <div style="font-weight: 700; color: var(--ink);">KES ${lead.estimatedKES.toLocaleString()}</div>
         </td>
         <td>
           <div style="font-weight: 700; color: ${escrowPaid > 0 ? 'var(--emerald-400)' : 'var(--slate-400)'};">

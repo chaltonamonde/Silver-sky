@@ -141,10 +141,10 @@ function initPortfolio() {
         <div class="case-card-img-wrap">
           <img src="${study.heroImage}" alt="${study.title}" loading="lazy">
           <div class="case-card-img-overlay"></div>
-          <span style="position: absolute; top: 1rem; left: 1rem; background: rgba(0,0,0,0.8); border: 1px solid rgba(245,158,11,0.4); color: var(--candlelight-amber); font-size: 0.7rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: 6px; text-transform: uppercase;">
+          <span style="position: absolute; top: 1rem; left: 1rem; background: rgba(44,62,80,0.85); border: 1px solid var(--border); color: var(--accent); font-size: 0.7rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: 6px; text-transform: uppercase;">
             ${study.category}
           </span>
-          <div style="position: absolute; bottom: 0.75rem; left: 1rem; right: 1rem; display: flex; justify-content: space-between; font-size: 0.75rem; color: #fff;">
+          <div style="position: absolute; bottom: 0.75rem; left: 1rem; right: 1rem; display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--surface);">
             <span>📍 ${study.venue}</span>
             <span>👥 ${study.guests} Guests</span>
           </div>
@@ -156,8 +156,8 @@ function initPortfolio() {
             <p class="case-tagline" style="margin-top: 0.5rem;">${study.tagline}</p>
           </div>
 
-          <div style="padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center;">
-            <span style="font-size: 0.75rem; color: var(--slate-400);">Host: <strong style="color: var(--slate-200);">${study.client.name}</strong></span>
+          <div style="padding-top: 1rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 0.75rem; color: var(--slate-400);">Host: <strong style="color: var(--ink);">${study.client.name}</strong></span>
             <button class="btn-read-case" data-id="${study.id}" style="color: var(--candlelight-amber); font-weight: 700; font-size: 0.8125rem; display: flex; align-items: center; gap: 0.3rem;">
               <span>Read Story</span> →
             </button>
@@ -198,44 +198,44 @@ function openCaseStudyModal(study) {
       <!-- Hero Banner -->
       <div style="position: relative; height: 320px; border-radius: var(--radius-lg); overflow: hidden;">
         <img src="${study.heroImage}" alt="${study.title}" style="width: 100%; height: 100%; object-fit: cover;">
-        <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(6,14,40,0.95) 100%);"></div>
-        <div style="position: absolute; bottom: 1rem; left: 1.5rem; right: 1.5rem; display: flex; justify-content: space-between; align-items: flex-end; color: #fff;">
+        <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(44,62,80,0.85) 100%);"></div>
+        <div style="position: absolute; bottom: 1rem; left: 1.5rem; right: 1.5rem; display: flex; justify-content: space-between; align-items: flex-end; color: var(--surface);">
           <div>
             <span class="badge-pill badge-gold" style="margin-bottom: 0.5rem;">${study.category} • ${study.date}</span>
-            <h2 class="font-serif" style="font-size: 1.75rem; color: #fff;">${study.title}</h2>
-            <p style="font-size: 0.875rem; color: var(--slate-300);">📍 ${study.venue} (${study.location}) • 👥 ${study.guests} Guests</p>
+            <h2 class="font-serif" style="font-size: 1.75rem; color: var(--surface);">${study.title}</h2>
+            <p style="font-size: 0.875rem; color: rgba(251,248,241,0.85);">📍 ${study.venue} (${study.location}) • 👥 ${study.guests} Guests</p>
           </div>
-          <div style="font-size: 0.8125rem; color: var(--slate-400);">Host: <strong style="color: var(--candlelight-amber);">${study.client.name}</strong></div>
+          <div style="font-size: 0.8125rem; color: var(--surface);">Host: <strong style="color: var(--accent);">${study.client.name}</strong></div>
         </div>
       </div>
 
       <!-- 3 Pillars -->
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
-        <div style="padding: 1.25rem; border-radius: var(--radius-md); background: rgba(3,7,18,0.7); border: 1px solid rgba(244,63,94,0.3);">
-          <div style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: #f43f5e; margin-bottom: 0.5rem;">1. The Challenge</div>
-          <p style="font-size: 0.8125rem; color: var(--slate-300);">${study.narrative.challenge}</p>
+        <div style="padding: 1.25rem; border-radius: var(--radius-md); background: var(--surface); border: 1px solid var(--border);">
+          <div style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--sky-deep); margin-bottom: 0.5rem;">1. The Challenge</div>
+          <p style="font-size: 0.8125rem; color: var(--ink-muted);">${study.narrative.challenge}</p>
         </div>
-        <div style="padding: 1.25rem; border-radius: var(--radius-md); background: rgba(3,7,18,0.7); border: 1px solid rgba(245,158,11,0.3);">
+        <div style="padding: 1.25rem; border-radius: var(--radius-md); background: var(--surface); border: 1px solid var(--border);">
           <div style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--candlelight-amber); margin-bottom: 0.5rem;">2. Creative Styling</div>
-          <p style="font-size: 0.8125rem; color: var(--slate-300);">${study.narrative.concept}</p>
+          <p style="font-size: 0.8125rem; color: var(--ink-muted);">${study.narrative.concept}</p>
         </div>
-        <div style="padding: 1.25rem; border-radius: var(--radius-md); background: rgba(3,7,18,0.7); border: 1px solid rgba(16,185,129,0.3);">
-          <div style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: #10b981; margin-bottom: 0.5rem;">3. Execution & Result</div>
-          <p style="font-size: 0.8125rem; color: var(--slate-300);">${study.narrative.outcome}</p>
+        <div style="padding: 1.25rem; border-radius: var(--radius-md); background: var(--surface); border: 1px solid var(--border);">
+          <div style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--sky-deep); margin-bottom: 0.5rem;">3. Execution & Result</div>
+          <p style="font-size: 0.8125rem; color: var(--ink-muted);">${study.narrative.outcome}</p>
         </div>
       </div>
 
       <!-- Infrastructure Deployed -->
-      <div style="padding: 1.25rem; border-radius: var(--radius-md); background: rgba(6,14,40,0.8); border: 1px solid rgba(59,130,246,0.25);">
-        <h4 class="font-serif" style="font-size: 1.125rem; color: #fff; margin-bottom: 0.75rem;">Technical Rigging & Heavy Hardware</h4>
-        <ul style="list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.5rem; font-size: 0.8125rem; color: var(--slate-300);">
+      <div style="padding: 1.25rem; border-radius: var(--radius-md); background: var(--surface); border: 1px solid var(--border);">
+        <h4 class="font-serif" style="font-size: 1.125rem; color: var(--ink); margin-bottom: 0.75rem;">Technical Rigging & Heavy Hardware</h4>
+        <ul style="list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.5rem; font-size: 0.8125rem; color: var(--ink-muted);">
           ${study.narrative.infrastructure.map(item => `<li>✔ ${item}</li>`).join('')}
         </ul>
       </div>
 
       <!-- Testimonial Quote -->
-      <div style="padding: 1.5rem; border-radius: var(--radius-md); background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.35);">
-        <p class="font-serif" style="font-size: 1.1rem; font-style: italic; color: var(--champagne-light); line-height: 1.6; margin-bottom: 0.75rem;">
+      <div style="padding: 1.5rem; border-radius: var(--radius-md); background: var(--sky-soft); border: 1px solid var(--sky);">
+        <p class="font-serif" style="font-size: 1.1rem; font-style: italic; color: var(--ink); line-height: 1.6; margin-bottom: 0.75rem;">
           "${study.narrative.testimonial}"
         </p>
         <p style="font-size: 0.8125rem; color: var(--candlelight-amber); font-weight: 700;">
@@ -245,10 +245,10 @@ function openCaseStudyModal(study) {
 
       <!-- Photo Gallery -->
       <div>
-        <h4 class="font-serif" style="font-size: 1.125rem; color: #fff; margin-bottom: 0.75rem;">Event Photo Gallery</h4>
+        <h4 class="font-serif" style="font-size: 1.125rem; color: var(--ink); margin-bottom: 0.75rem;">Event Photo Gallery</h4>
         <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem;">
           ${study.gallery.map(img => `
-            <div style="height: 110px; border-radius: var(--radius-sm); overflow: hidden;">
+            <div style="height: 110px; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border);">
               <img src="${img}" alt="Gallery photo" style="width: 100%; height: 100%; object-fit: cover;">
             </div>
           `).join('')}
@@ -256,7 +256,7 @@ function openCaseStudyModal(study) {
       </div>
 
       <!-- Metrics -->
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; text-align: center; padding: 1rem; background: rgba(3,7,18,0.9); border-radius: var(--radius-md);">
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; text-align: center; padding: 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);">
         ${study.metrics.map(m => `
           <div>
             <div class="font-serif" style="font-size: 1.35rem; color: var(--candlelight-amber); font-weight: 700;">${m.value}</div>
@@ -470,13 +470,13 @@ function initPackages() {
           <div>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
               <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--candlelight-amber);">${pkg.targetAudience}</span>
-              <span style="font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.5rem; background: rgba(37,99,235,0.25); border: 1px solid rgba(59,130,246,0.3); border-radius: 4px; color: #93c5fd;">${pkg.guestCapacity}</span>
+              <span style="font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.5rem; background: var(--sky-soft); border: 1px solid var(--sky); border-radius: 4px; color: var(--sky-deep);">${pkg.guestCapacity}</span>
             </div>
 
-            <h3 class="font-serif" style="font-size: 1.75rem; color: #fff; margin-bottom: 0.5rem;">${pkg.name}</h3>
-            <p style="font-size: 0.8125rem; color: var(--slate-300); line-height: 1.6; margin-bottom: 1.5rem;">${pkg.description}</p>
+            <h3 class="font-serif" style="font-size: 1.75rem; color: var(--ink); margin-bottom: 0.5rem;">${pkg.name}</h3>
+            <p style="font-size: 0.8125rem; color: var(--ink-muted); line-height: 1.6; margin-bottom: 1.5rem;">${pkg.description}</p>
 
-            <div style="padding: 1rem 0; border-top: 1px solid var(--slate-800); border-bottom: 1px solid var(--slate-800); margin-bottom: 1.25rem;">
+            <div style="padding: 1rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 1.25rem;">
               <span style="font-size: 0.7rem; color: var(--slate-400); text-transform: uppercase; font-weight: 600; display: block;">Starting Baseline</span>
               <span class="font-serif text-gold-gradient" style="font-size: 2.25rem; font-weight: 700;">${pkg.formattedPrice}</span>
               <span style="display: block; font-size: 0.75rem; color: var(--emerald-500); font-weight: 600; margin-top: 0.25rem;">
@@ -485,8 +485,8 @@ function initPackages() {
             </div>
 
             <div style="margin-bottom: 1.25rem;">
-              <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #fff; display: block; margin-bottom: 0.5rem;">Included Services:</span>
-              <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.8125rem; color: var(--slate-300);">
+              <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--ink); display: block; margin-bottom: 0.5rem;">Included Services:</span>
+              <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.8125rem; color: var(--ink-muted);">
                 ${pkg.inclusions.map(inc => `<li style="display: flex; gap: 0.5rem; align-items: flex-start;"><span style="color: var(--candlelight-amber);">✔</span> <span>${inc}</span></li>`).join('')}
               </ul>
             </div>
@@ -499,7 +499,7 @@ function initPackages() {
             </div>
           </div>
 
-          <div style="margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid var(--slate-800); display: flex; flex-direction: column; gap: 0.75rem;">
+          <div style="margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 0.75rem;">
             <button class="btn btn-emerald btn-lock-pkg" data-pkg="${pkg.name}" data-amount="${pkg.depositAmountKES}">
               Lock Date with M-Pesa Deposit
             </button>
@@ -539,14 +539,14 @@ function initPackages() {
             <div class="glass-royal-card" style="overflow: hidden;">
               <div style="height: 160px; overflow: hidden; position: relative;">
                 <img src="${item.image}" alt="${item.name}" style="width: 100%; height: 100%; object-fit: cover;">
-                <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(3,7,18,0.9) 100%);"></div>
-                <span style="position: absolute; bottom: 0.75rem; left: 1rem; color: #fff; font-weight: 700; font-size: 0.875rem;">${item.name}</span>
+                <div style="position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(44,62,80,0.85) 100%);"></div>
+                <span style="position: absolute; bottom: 0.75rem; left: 1rem; color: var(--surface); font-weight: 700; font-size: 0.875rem;">${item.name}</span>
               </div>
               <div style="padding: 1rem; font-size: 0.8125rem; color: var(--slate-400);">
                 <p>${item.specs}</p>
-                <div style="margin-top: 0.75rem; padding-top: 0.5rem; border-top: 1px solid var(--slate-800); display: flex; justify-content: space-between; align-items: center;">
+                <div style="margin-top: 0.75rem; padding-top: 0.5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
                   <span style="color: var(--candlelight-amber); font-weight: 700;">${item.startingAt}</span>
-                  <a href="#quote-estimator" style="color: var(--cobalt-400); font-weight: 600;">Add to Quote →</a>
+                  <a href="#quote-estimator" style="color: var(--sky-deep); font-weight: 600;">Add to Quote →</a>
                 </div>
               </div>
             </div>
@@ -602,17 +602,17 @@ function initRegionalHubs() {
 
     if (highlightsEl) {
       highlightsEl.innerHTML = hub.regionalHighlights.map(h => `
-        <div style="padding: 0.85rem; border-radius: var(--radius-md); background: rgba(3,7,18,0.6); border: 1px solid var(--slate-800);">
+        <div style="padding: 0.85rem; border-radius: var(--radius-md); background: var(--surface); border: 1px solid var(--border);">
           <div style="font-size: 0.8125rem; font-weight: 700; color: var(--candlelight-amber); margin-bottom: 0.25rem;">✔ ${h.title}</div>
-          <p style="font-size: 0.75rem; color: var(--slate-400);">${h.description}</p>
+          <p style="font-size: 0.75rem; color: var(--ink-muted);">${h.description}</p>
         </div>
       `).join('');
     }
 
     if (venuesEl) {
       venuesEl.innerHTML = hub.popularVenues.map(v => `
-        <div style="padding: 0.75rem; border-radius: var(--radius-sm); background: rgba(15,39,108,0.25); border: 1px solid rgba(59,130,246,0.2); font-size: 0.8125rem;">
-          <div style="font-weight: 700; color: #fff;">${v.name}</div>
+        <div style="padding: 0.75rem; border-radius: var(--radius-sm); background: var(--surface); border: 1px solid var(--border); font-size: 0.8125rem;">
+          <div style="font-weight: 700; color: var(--ink);">${v.name}</div>
           <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--slate-400); margin-top: 0.25rem;">
             <span>${v.neighborhood}</span>
             <span style="color: var(--candlelight-amber);">${v.capacity}</span>
@@ -660,15 +660,15 @@ function initReviews() {
             <div style="color: var(--candlelight-amber); font-size: 0.875rem;">★★★★★</div>
             <span style="font-size: 0.75rem; color: var(--slate-500);">${rev.timeAgo}</span>
           </div>
-          <p style="font-size: 0.875rem; color: var(--slate-200); line-height: 1.6; font-style: italic;">
+          <p style="font-size: 0.875rem; color: var(--ink); line-height: 1.6; font-style: italic;">
             "${rev.reviewText}"
           </p>
         </div>
 
-        <div style="padding-top: 1rem; border-top: 1px solid var(--slate-800); display: flex; align-items: center; gap: 0.75rem;">
+        <div style="padding-top: 1rem; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 0.75rem;">
           <img src="${rev.avatar}" alt="${rev.authorName}" class="avatar-img">
           <div>
-            <div style="font-size: 0.875rem; font-weight: 700; color: #fff;">${rev.authorName} <span title="Verified Client" style="color: var(--emerald-500);">✔</span></div>
+            <div style="font-size: 0.875rem; font-weight: 700; color: var(--ink);">${rev.authorName} <span title="Verified Client" style="color: var(--emerald-500);">✔</span></div>
             <div style="font-size: 0.75rem; color: var(--candlelight-amber);">${rev.authorRole}</div>
             <div style="font-size: 0.7rem; color: var(--slate-400); margin-top: 0.2rem;">📍 ${rev.venue}</div>
           </div>
@@ -870,12 +870,12 @@ function initMetaModal() {
       <div class="glass-royal-card" style="overflow: hidden; display: flex; flex-direction: column;">
         <div style="height: 180px; position: relative;">
           <img src="${post.mediaUrl}" alt="Facebook post" style="width: 100%; height: 100%; object-fit: cover;">
-          <span style="position: absolute; top: 0.75rem; left: 0.75rem; background: rgba(0,0,0,0.8); border: 1px solid rgba(245,158,11,0.3); color: var(--candlelight-amber); font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px;">${post.eventType}</span>
-          <span style="position: absolute; bottom: 0.75rem; left: 0.75rem; background: rgba(6,14,40,0.85); color: #93c5fd; font-size: 0.7rem; padding: 0.2rem 0.5rem; border-radius: 4px;">📍 ${post.venueTag}</span>
+          <span style="position: absolute; top: 0.75rem; left: 0.75rem; background: rgba(44,62,80,0.85); border: 1px solid var(--border); color: var(--candlelight-amber); font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px;">${post.eventType}</span>
+          <span style="position: absolute; bottom: 0.75rem; left: 0.75rem; background: var(--surface); color: var(--sky-deep); border: 1px solid var(--border); font-size: 0.7rem; padding: 0.2rem 0.5rem; border-radius: 4px;">📍 ${post.venueTag}</span>
         </div>
         <div style="padding: 1rem; flex: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 0.75rem;">
-          <p style="font-size: 0.8125rem; color: var(--slate-300); line-height: 1.5;">${post.message}</p>
-          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--slate-800); padding-top: 0.5rem; font-size: 0.75rem; color: var(--slate-400);">
+          <p style="font-size: 0.8125rem; color: var(--ink-muted); line-height: 1.5;">${post.message}</p>
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 0.5rem; font-size: 0.75rem; color: var(--slate-400);">
             <span>👍 ${post.likes_count} &nbsp; 💬 ${post.comments_count}</span>
             <a href="${post.permalink_url}" target="_blank" rel="noopener noreferrer" style="color: var(--candlelight-amber); font-weight: 600;">Open on FB ↗</a>
           </div>
