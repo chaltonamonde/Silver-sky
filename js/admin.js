@@ -51,6 +51,13 @@ let activeSearchQuery = '';
 let selectedLead = null;
 let currentEnteredPin = '';
 
+// Interactive Analytics Hub Chart State
+let serviceCashflowChart = null;
+let packageCashflowChart = null;
+let monthlyTrajectoryChart = null;
+let funnelStagesChart = null;
+let activeFollowupFilter = 'all';
+
 // DOM Initialization
 document.addEventListener('DOMContentLoaded', () => {
   initSecurityLockscreen();
@@ -793,9 +800,8 @@ function renderAll() {
   renderPackagesGrid();
   renderPortfolioGrid();
   renderRegionalSEOTable();
-  renderRecoveryChart();
-  renderFunnelChart();
-  renderCashflowCategory();
+  renderAnalyticsCharts();
+  renderFollowupMatrix();
   checkCalendarConflicts();
 }
 
@@ -1337,92 +1343,571 @@ function renderRegionalSEOTable() {
   `).join('');
 }
 
-// Visual Analytics: Recovery & Funnel & Dynamic Benchmark
-function renderRecoveryChart() {
-  const container = document.getElementById('recovery-bars-container');
-  const subhead = document.getElementById('recovery-subhead');
-  const badge = document.getElementById('recovery-badge');
-  if (!container) return;
+// ==========================================================
+// 10. INTERACTIVE ANALYTICS ENGINE & FLOW OF CASH CHARTS
+// ==========================================================
 
-  const latest = MONTHLY_RECOVERY_DATA[MONTHLY_RECOVERY_DATA.length - 2]; // Mar 2026
-  const pctOfBenchmark = ((latest.actualRecovered / activeBenchmarkKES) * 100).toFixed(1);
+function mapLeadToPackage(lead) {
+  const ev = (lead.eventType || '').toLowerCase();
+  const venue = (lead.venue || '').toLowerCase();
+  const region = (lead.region || '').toLowerCase();
 
-  if (subhead) subhead.textContent = `KES ${latest.actualRecovered.toLocaleString()} Recovered vs ${activeBenchmarkLabel} Target (KES ${activeBenchmarkKES.toLocaleString()})`;
-  if (badge) badge.textContent = `${pctOfBenchmark}% of Target`;
+  if (ev.includes('wedding')) {
+    if (region.includes('mombasa') || venue.includes('diani') || venue.includes('beach') || venue.includes('nomad')) {
+      return 'Coastal Bespoke';
+    }
+    if (lead.estimatedKES >= 2500000 || lead.guestCount >= 400) {
+      return 'Royal Opulence';
+    }
+    return 'Royal Opulence';
+  }
+  if (lead.guestCount >= 800 || lead.estimatedKES >= 3500000) {
+    return 'Celestial Grandeur';
+  }
+  if (ev.includes('corporate') || ev.includes('gala') || ev.includes('awards')) {
+    return 'Annual Gala & Awards';
+  }
+  return 'Executive Summit';
+}
 
-  container.innerHTML = MONTHLY_RECOVERY_DATA.map(item => {
-    const pct = Math.min(100, Math.round((item.actualRecovered / activeBenchmarkKES) * 100));
+function destroyAnalyticsCharts() {
+  if (serviceCashflowChart) {
+    serviceCashflowChart.destroy();
+    serviceCashflowChart = null;
+  }
+  if (packageCashflowChart) {
+    packageCashflowChart.destroy();
+    packageCashflowChart = null;
+  }
+  if (monthlyTrajectoryChart) {
+    monthlyTrajectoryChart.destroy();
+    monthlyTrajectoryChart = null;
+  }
+  if (funnelStagesChart) {
+    funnelStagesChart.destroy();
+    funnelStagesChart = null;
+  }
+}
+
+function renderAnalyticsCharts() {
+  if (!window.Chart) {
+    console.warn('Chart.js not yet loaded');
+    return;
+  }
+
+  // Configure Chart.js global dark theme defaults
+  Chart.defaults.color = '#94a3b8';
+  Chart.defaults.font.family = "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif";
+  Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.08)';
+
+  // 1. Service Categories Breakdown
+  const catNames = ['Weddings', 'Corporate Contracts', 'Equipment Hire', 'Decor Styling'];
+  const catColors = ['#10b981', '#2563eb', '#38bdf8', '#f43f5e'];
+
+  const catEscrow = {};
+  const catPipeline = {};
+
+  catNames.forEach(c => {
+    catEscrow[c] = transactions
+      .filter(t => t.serviceCategory === c && (t.status === 'CONFIRMED' || t.status === 'RECONCILED'))
+      .reduce((sum, t) => sum + t.amountKES, 0);
+
+    catPipeline[c] = leads
+      .filter(l => {
+        const ev = l.eventType.toLowerCase();
+        if (c === 'Weddings') return ev.includes('wedding');
+        if (c === 'Corporate Contracts') return ev.includes('corporate') || ev.includes('banquet') || ev.includes('summit');
+        if (c === 'Decor Styling') return ev.includes('soirée') || ev.includes('birthday');
+        if (c === 'Equipment Hire') return false;
+        return false;
+      })
+      .reduce((sum, l) => sum + (l.status === 'Confirmed' ? (l.estimatedKES - l.depositKES) : l.estimatedKES), 0);
+  });
+
+  const totalEscrow = catNames.reduce((s, c) => s + catEscrow[c], 0) || 1;
+  const totalPipeline = Object.values(catPipeline).reduce((s, p) => s + p, 0);
+
+  // Update Metric Strip
+  const elMetricCollected = document.getElementById('analytics-metric-collected');
+  const elMetricPipeline = document.getElementById('analytics-metric-pipeline');
+  const elMetricTopService = document.getElementById('analytics-metric-topservice');
+  const elMetricTopPackage = document.getElementById('analytics-metric-toppackage');
+
+  if (elMetricCollected) elMetricCollected.textContent = 'KES ' + (totalEscrow / 1000000).toFixed(2) + 'M';
+  if (elMetricPipeline) elMetricPipeline.textContent = 'KES ' + (totalPipeline / 1000000).toFixed(1) + 'M';
+
+  // Dominant Category
+  let topCat = catNames[0];
+  catNames.forEach(c => {
+    if (catEscrow[c] > catEscrow[topCat]) topCat = c;
+  });
+  const topCatPct = Math.round((catEscrow[topCat] / totalEscrow) * 100);
+  if (elMetricTopService) elMetricTopService.textContent = `${topCat} (${topCatPct}%)`;
+
+  // Update Service Cashflow Total Pill
+  const elServicePill = document.getElementById('service-cashflow-total-pill');
+  if (elServicePill) elServicePill.textContent = 'Total: KES ' + (totalEscrow / 1000000).toFixed(2) + 'M';
+
+  // Update Legend List
+  const serviceLegendList = document.getElementById('service-cashflow-legend-list');
+  if (serviceLegendList) {
+    serviceLegendList.innerHTML = catNames.map((c, i) => {
+      const amt = catEscrow[c];
+      const pct = Math.round((amt / totalEscrow) * 100);
+      const pipe = catPipeline[c];
+      return `
+        <div class="donut-legend-row">
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <span style="width: 10px; height: 10px; border-radius: 50%; background: ${catColors[i]};"></span>
+            <div>
+              <div style="color: #fff; font-weight: 600;">${c}</div>
+              <div style="font-size: 0.68rem; color: var(--slate-400);">${pct}% of Escrow</div>
+            </div>
+          </div>
+          <div style="text-align: right;">
+            <div style="color: var(--emerald-400); font-weight: 700; font-size: 0.85rem;">KES ${(amt / 1000000).toFixed(2)}M</div>
+            <div style="font-size: 0.68rem; color: var(--candlelight-amber);">Pipeline: KES ${(pipe / 1000000).toFixed(2)}M</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // -------------------------------------------------------------
+  // CHART 1: CASH FLOW PER SERVICE CATEGORY (DOUGHNUT)
+  // -------------------------------------------------------------
+  const serviceCanvas = document.getElementById('chart-service-cashflow');
+  if (serviceCanvas) {
+    if (serviceCashflowChart) serviceCashflowChart.destroy();
+    const ctx = serviceCanvas.getContext('2d');
+    serviceCashflowChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: catNames,
+        datasets: [{
+          data: catNames.map(c => catEscrow[c]),
+          backgroundColor: catColors,
+          borderColor: '#060e28',
+          borderWidth: 2,
+          hoverOffset: 6
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '72%',
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (context) => {
+                const val = context.raw || 0;
+                const pct = Math.round((val / totalEscrow) * 100);
+                return ` Escrow: KES ${val.toLocaleString()} (${pct}%)`;
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+
+  // -------------------------------------------------------------
+  // CHART 2: CASH FLOW & PIPELINE PER SIGNATURE PACKAGE (BAR)
+  // -------------------------------------------------------------
+  const pkgNames = ['Royal Opulence', 'Celestial Grandeur', 'Annual Gala & Awards', 'Coastal Bespoke', 'Executive Summit'];
+  const pkgEscrow = {};
+  const pkgPipeline = {};
+
+  pkgNames.forEach(p => {
+    pkgEscrow[p] = transactions
+      .filter(t => t.packageName.toLowerCase().includes(p.toLowerCase()))
+      .reduce((s, t) => s + t.amountKES, 0);
+
+    const mappedLeads = leads.filter(l => mapLeadToPackage(l) === p);
+
+    if (pkgEscrow[p] === 0) {
+      const confLeads = mappedLeads.filter(l => l.status === 'Confirmed');
+      pkgEscrow[p] = confLeads.reduce((s, l) => s + l.depositKES, 0);
+    }
+
+    pkgPipeline[p] = mappedLeads.reduce((s, l) => {
+      if (l.status === 'Confirmed') {
+        return s + (l.estimatedKES - l.depositKES);
+      }
+      return s + l.estimatedKES;
+    }, 0);
+  });
+
+  // Top yielding package
+  let topPkg = pkgNames[0];
+  let maxPkgTotal = 0;
+  pkgNames.forEach(p => {
+    const combined = pkgEscrow[p] + pkgPipeline[p];
+    if (combined > maxPkgTotal) {
+      maxPkgTotal = combined;
+      topPkg = p;
+    }
+  });
+  if (elMetricTopPackage) elMetricTopPackage.textContent = `${topPkg} (KES ${(maxPkgTotal / 1000000).toFixed(1)}M)`;
+
+  const packageCanvas = document.getElementById('chart-package-cashflow');
+  if (packageCanvas) {
+    if (packageCashflowChart) packageCashflowChart.destroy();
+    const ctx = packageCanvas.getContext('2d');
+    packageCashflowChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: pkgNames.map(name => name.length > 14 ? name.split(' ') : name),
+        datasets: [
+          {
+            label: 'Secured Escrow Deposit',
+            data: pkgNames.map(p => pkgEscrow[p]),
+            backgroundColor: '#10b981',
+            borderRadius: 4,
+            barPercentage: 0.7,
+            categoryPercentage: 0.8
+          },
+          {
+            label: 'Pending Contract Balance',
+            data: pkgNames.map(p => pkgPipeline[p]),
+            backgroundColor: '#f59e0b',
+            borderRadius: 4,
+            barPercentage: 0.7,
+            categoryPercentage: 0.8
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (context) => ` ${context.dataset.label}: KES ${Number(context.raw).toLocaleString()}`
+            }
+          }
+        },
+        scales: {
+          x: {
+            grid: { display: false },
+            ticks: { font: { size: 11 }, maxRotation: 0 }
+          },
+          y: {
+            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+            ticks: {
+              callback: (v) => 'KES ' + (v / 1000000).toFixed(1) + 'M',
+              font: { size: 10 }
+            }
+          }
+        }
+      }
+    });
+  }
+
+  // -------------------------------------------------------------
+  // CHART 3: MONTHLY VELOCITY & TARGET TRAJECTORY (AREA LINE)
+  // -------------------------------------------------------------
+  const trajectoryCanvas = document.getElementById('chart-monthly-trajectory');
+  if (trajectoryCanvas) {
+    if (monthlyTrajectoryChart) monthlyTrajectoryChart.destroy();
+    const ctx = trajectoryCanvas.getContext('2d');
+
+    const grad = ctx.createLinearGradient(0, 0, 0, 260);
+    grad.addColorStop(0, 'rgba(56, 189, 248, 0.35)');
+    grad.addColorStop(1, 'rgba(56, 189, 248, 0.00)');
+
+    const months = MONTHLY_RECOVERY_DATA.map(d => d.month);
+    const actuals = MONTHLY_RECOVERY_DATA.map(d => d.actualRecovered);
+    const stepTarget = activeBenchmarkKES / (MONTHLY_RECOVERY_DATA.length || 7);
+    const targets = MONTHLY_RECOVERY_DATA.map((d, i) => Math.round(stepTarget * (i + 1)));
+
+    const latestActual = actuals[actuals.length - 2]; // Mar 2026
+    const pctTarget = Math.round((latestActual / activeBenchmarkKES) * 100);
+    const subhead = document.getElementById('trajectory-subhead');
+    const badge = document.getElementById('trajectory-status-badge');
+
+    if (subhead) {
+      subhead.textContent = `KES ${latestActual.toLocaleString()} Recovered vs ${activeBenchmarkLabel} Target (KES ${activeBenchmarkKES.toLocaleString()})`;
+    }
+    if (badge) {
+      if (pctTarget >= 100) {
+        badge.className = 'status-pill status-confirmed';
+        badge.textContent = `+${pctTarget - 100}% Target Exceeded`;
+      } else {
+        badge.className = 'status-pill status-in-discussion';
+        badge.textContent = `${pctTarget}% of Target`;
+      }
+    }
+
+    monthlyTrajectoryChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: months,
+        datasets: [
+          {
+            label: 'Actual Escrow Recovered',
+            data: actuals,
+            borderColor: '#38bdf8',
+            backgroundColor: grad,
+            fill: true,
+            tension: 0.35,
+            pointBackgroundColor: '#38bdf8',
+            pointBorderColor: '#0b194d',
+            pointBorderWidth: 2,
+            pointRadius: 4,
+            pointHoverRadius: 7
+          },
+          {
+            label: `Target Benchmark (${activeBenchmarkLabel})`,
+            data: targets,
+            borderColor: '#94a3b8',
+            borderDash: [6, 4],
+            pointRadius: 0,
+            fill: false,
+            tension: 0.1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (context) => ` ${context.dataset.label}: KES ${Number(context.raw).toLocaleString()}`
+            }
+          }
+        },
+        scales: {
+          x: {
+            grid: { display: false },
+            ticks: { font: { size: 10 } }
+          },
+          y: {
+            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+            ticks: {
+              callback: (v) => 'KES ' + (v / 1000000).toFixed(1) + 'M',
+              font: { size: 10 }
+            }
+          }
+        }
+      }
+    });
+  }
+
+  // -------------------------------------------------------------
+  // CHART 4: CRO PIPELINE CONVERSION FUNNEL (HORIZONTAL BAR)
+  // -------------------------------------------------------------
+  const funnelCanvas = document.getElementById('chart-funnel-stages');
+  if (funnelCanvas) {
+    if (funnelStagesChart) funnelStagesChart.destroy();
+    const ctx = funnelCanvas.getContext('2d');
+    const stageNames = FUNNEL_STAGES.map(s => s.name);
+    const stageCounts = FUNNEL_STAGES.map(s => s.count);
+
+    funnelStagesChart = new Chart(ctx, {
+      type: 'bar',
+      indexAxis: 'y',
+      data: {
+        labels: stageNames,
+        datasets: [{
+          label: 'Conversions',
+          data: stageCounts,
+          backgroundColor: [
+            '#2563eb',
+            '#0284c7',
+            '#0d9488',
+            '#f59e0b',
+            '#10b981'
+          ],
+          borderRadius: 4,
+          barPercentage: 0.65
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (context) => {
+                const stage = FUNNEL_STAGES[context.dataIndex];
+                return ` ${Number(context.raw).toLocaleString()} clients (${stage.conv} conv, ${stage.drop} drop)`;
+              },
+              afterLabel: (context) => {
+                return `💡 ${FUNNEL_STAGES[context.dataIndex].insight}`;
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+            ticks: {
+              callback: (v) => v >= 1000 ? (v / 1000).toFixed(0) + 'k' : v,
+              font: { size: 10 }
+            }
+          },
+          y: {
+            grid: { display: false },
+            ticks: { font: { size: 11, weight: '600' } }
+          }
+        }
+      }
+    });
+  }
+}
+
+// ==========================================================
+// ACTIONABLE PRIORITY CASHFLOW FOLLOW-UP MATRIX
+// ==========================================================
+
+function renderFollowupMatrix() {
+  const tbody = document.getElementById('followup-matrix-tbody');
+  if (!tbody) return;
+
+  const filtered = leads.filter(l => {
+    if (activeFollowupFilter === 'action-needed') {
+      return l.status === 'Deposit Pending' || l.status === 'New';
+    }
+    if (activeFollowupFilter === 'weddings') {
+      return l.eventType.toLowerCase().includes('wedding');
+    }
+    if (activeFollowupFilter === 'corporate') {
+      return !l.eventType.toLowerCase().includes('wedding');
+    }
+    return true;
+  });
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--slate-400); padding: 2rem;">No matching deals found for current filter.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = filtered.map(lead => {
+    const pkg = mapLeadToPackage(lead);
+    const serviceCat = lead.eventType.toLowerCase().includes('wedding') ? 'Weddings' :
+                       (lead.eventType.toLowerCase().includes('corporate') || lead.eventType.toLowerCase().includes('banquet')) ? 'Corporate Contracts' : 'Decor Styling';
+
+    const isConfirmed = lead.status === 'Confirmed';
+    const isDepositPending = lead.status === 'Deposit Pending';
+    const isNew = lead.status === 'New';
+
+    const escrowPaid = isConfirmed ? lead.depositKES : 0;
+    const pendingBalance = isConfirmed ? (lead.estimatedKES - lead.depositKES) : lead.estimatedKES;
+
+    let urgencyBadge = '';
+    if (isDepositPending) {
+      urgencyBadge = `<span class="followup-badge followup-urgent">⚠️ Urgent: Deposit Overdue</span>`;
+    } else if (isNew) {
+      urgencyBadge = `<span class="followup-badge followup-active">🔔 Action: Inspection Pending</span>`;
+    } else if (isConfirmed) {
+      urgencyBadge = `<span class="followup-badge followup-healthy">✅ Secured: Final 60% Due</span>`;
+    } else {
+      urgencyBadge = `<span class="followup-badge followup-active">💬 In Discussion</span>`;
+    }
+
+    let waMsg = '';
+    if (isDepositPending) {
+      waMsg = `Hello ${lead.clientName}, regarding your ${pkg} booking for ${lead.venue}. Your 40% escrow deposit of KES ${lead.depositKES.toLocaleString()} is pending calendar lock via Paybill 782910. Kindly let us know if you need us to re-dispatch the M-Pesa STK push prompt.`;
+    } else if (isNew) {
+      waMsg = `Hello ${lead.clientName}, Evans Mutua here from Silver Sky Events. We received your VIP inquiry for ${lead.eventType} at ${lead.venue} with ${lead.guestCount} guests. We'd love to schedule a complimentary on-site technical inspection for your date (${lead.targetDate}).`;
+    } else if (isConfirmed) {
+      waMsg = `Hello ${lead.clientName}, your 40% escrow deposit for ${lead.venue} is locked on the master calendar. The remaining contract balance of KES ${(lead.estimatedKES - lead.depositKES).toLocaleString()} will be due 14 days prior to event staging.`;
+    } else {
+      waMsg = `Hello ${lead.clientName}, we have prepared the custom 3D rigging proposal for ${lead.venue} (${pkg}). Would you like to review the package inclusions together?`;
+    }
+
+    const cleanPhone = '254' + lead.phone.replace(/[^0-9]/g, '').slice(-9);
+    const waUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(waMsg)}`;
+
     return `
-      <div style="margin-bottom: 0.85rem;">
-        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; margin-bottom: 0.25rem;">
-          <span style="color: #fff; font-weight: 600;">${item.month} • <span style="color: var(--slate-400);">${item.pillar}</span></span>
-          <strong style="color: var(--emerald-500);">KES ${item.actualRecovered.toLocaleString()}</strong>
-        </div>
-        <div style="background: rgba(15,23,42,0.8); height: 8px; border-radius: 4px; overflow: hidden; border: 1px solid var(--admin-border);">
-          <div style="background: linear-gradient(90deg, var(--cobalt-500), var(--emerald-500)); height: 100%; width: ${pct}%; border-radius: 4px; transition: width 0.8s ease;"></div>
-        </div>
-      </div>
+      <tr>
+        <td>
+          <div style="font-weight: 700; color: #fff;">${lead.clientName}</div>
+          <div style="font-size: 0.72rem; color: var(--candlelight-amber);">${lead.eventType} @ ${lead.venue}</div>
+          <div style="font-size: 0.68rem; color: var(--slate-400);">${lead.guestCount} Pax • Target: ${lead.targetDate}</div>
+        </td>
+        <td>
+          <div style="font-weight: 600; color: #fff;">${pkg}</div>
+          <div style="font-size: 0.7rem; color: var(--slate-400);">${serviceCat}</div>
+        </td>
+        <td>
+          <div style="font-weight: 700; color: #fff;">KES ${lead.estimatedKES.toLocaleString()}</div>
+        </td>
+        <td>
+          <div style="font-weight: 700; color: ${escrowPaid > 0 ? 'var(--emerald-400)' : 'var(--slate-400)'};">
+            KES ${escrowPaid.toLocaleString()}
+          </div>
+          <div style="font-size: 0.68rem; color: ${escrowPaid > 0 ? 'var(--emerald-500)' : 'var(--slate-500)'};">
+            ${escrowPaid > 0 ? '● In Escrow' : '○ Not yet deposited'}
+          </div>
+        </td>
+        <td>
+          <div style="font-weight: 800; color: ${pendingBalance > 0 ? 'var(--candlelight-amber)' : 'var(--emerald-400)'};">
+            KES ${pendingBalance.toLocaleString()}
+          </div>
+          <div style="font-size: 0.68rem; color: var(--slate-400);">Cashflow to collect</div>
+        </td>
+        <td>
+          ${urgencyBadge}
+        </td>
+        <td>
+          <div style="display: flex; gap: 0.35rem; align-items: center; flex-wrap: wrap;">
+            <a href="${waUrl}" target="_blank" class="btn-action-followup wa" title="Launch WhatsApp Follow-up">
+              💬 WhatsApp
+            </a>
+            <a href="tel:${lead.phone}" class="btn-action-followup call" title="Call Client">
+              📞 Call
+            </a>
+            <button class="btn-action-followup stk matrix-stk-btn" data-lead-id="${lead.id}" title="Trigger M-Pesa STK Push">
+              💳 STK Push
+            </button>
+          </div>
+        </td>
+      </tr>
     `;
   }).join('');
+
+  // Event listener for M-Pesa STK Push buttons
+  document.querySelectorAll('.matrix-stk-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const leadId = btn.getAttribute('data-lead-id');
+      const lead = leads.find(l => l.id === leadId);
+      if (!lead) return;
+      const modal = document.getElementById('admin-stk-modal');
+      if (!modal) return;
+
+      const inpClient = document.getElementById('stk-client');
+      const inpPhone = document.getElementById('stk-phone');
+      const inpAmount = document.getElementById('stk-amount');
+      const inpPackage = document.getElementById('stk-package');
+      const inpCategory = document.getElementById('stk-category');
+
+      if (inpClient) inpClient.value = lead.clientName;
+      if (inpPhone) inpPhone.value = '0' + lead.phone.replace(/[^0-9]/g, '').slice(-9);
+      if (inpAmount) inpAmount.value = lead.depositKES;
+      if (inpPackage) inpPackage.value = `${mapLeadToPackage(lead)} (40% Escrow Deposit)`;
+      if (inpCategory) {
+        inpCategory.value = lead.eventType.toLowerCase().includes('wedding') ? 'Weddings' : 'Corporate Contracts';
+      }
+
+      modal.style.display = 'flex';
+      showToast(`M-Pesa STK push pre-filled for ${lead.clientName}.`, 'gold');
+    });
+  });
 }
 
-function renderFunnelChart() {
-  const container = document.getElementById('cro-funnel-container');
-  if (!container) return;
+// Backward compatibility wrappers
+function renderRecoveryChart() { renderAnalyticsCharts(); }
+function renderFunnelChart() { renderAnalyticsCharts(); }
+function renderCashflowCategory() { renderAnalyticsCharts(); }
 
-  container.innerHTML = FUNNEL_STAGES.map(stage => `
-    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.75rem;">
-      <div style="width: 24px; height: 24px; border-radius: 50%; background: var(--cobalt-500); color: #fff; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center;">
-        ${stage.step}
-      </div>
-      <div style="flex: 1;">
-        <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
-          <strong style="color: #fff;">${stage.name}</strong>
-          <span style="color: var(--candlelight-amber);">${stage.count.toLocaleString()} (${stage.conv})</span>
-        </div>
-        <div style="font-size: 0.7rem; color: var(--slate-400);">${stage.insight}</div>
-      </div>
-    </div>
-  `).join('');
-}
-
-function renderCashflowCategory() {
-  const container = document.getElementById('cashflow-category-breakdown');
-  if (!container) return;
-
-  const weddingsTotal = transactions.filter(t => t.serviceCategory === 'Weddings').reduce((s, t) => s + t.amountKES, 0);
-  const corporateTotal = transactions.filter(t => t.serviceCategory === 'Corporate Contracts').reduce((s, t) => s + t.amountKES, 0);
-  const equipTotal = transactions.filter(t => t.serviceCategory === 'Equipment Hire').reduce((s, t) => s + t.amountKES, 0);
-  const decorTotal = transactions.filter(t => t.serviceCategory === 'Decor Styling').reduce((s, t) => s + t.amountKES, 0);
-  const grandTotal = weddingsTotal + corporateTotal + equipTotal + decorTotal || 1;
-
-  container.innerHTML = `
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-      <div style="background: rgba(15,23,42,0.6); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--admin-border);">
-        <div style="font-size: 0.7rem; color: var(--slate-400);">WEDDINGS ESCROW</div>
-        <div style="font-size: 1.25rem; font-weight: 700; color: #fff; margin: 0.25rem 0;">KES ${weddingsTotal.toLocaleString()}</div>
-        <div style="font-size: 0.7rem; color: var(--emerald-500);">${Math.round((weddingsTotal/grandTotal)*100)}% of total</div>
-      </div>
-      <div style="background: rgba(15,23,42,0.6); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--admin-border);">
-        <div style="font-size: 0.7rem; color: var(--slate-400);">CORPORATE SUMMITS</div>
-        <div style="font-size: 1.25rem; font-weight: 700; color: #fff; margin: 0.25rem 0;">KES ${corporateTotal.toLocaleString()}</div>
-        <div style="font-size: 0.7rem; color: var(--emerald-500);">${Math.round((corporateTotal/grandTotal)*100)}% of total</div>
-      </div>
-      <div style="background: rgba(15,23,42,0.6); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--admin-border);">
-        <div style="font-size: 0.7rem; color: var(--slate-400);">EQUIPMENT RENTAL</div>
-        <div style="font-size: 1.25rem; font-weight: 700; color: #fff; margin: 0.25rem 0;">KES ${equipTotal.toLocaleString()}</div>
-        <div style="font-size: 0.7rem; color: var(--emerald-500);">${Math.round((equipTotal/grandTotal)*100)}% of total</div>
-      </div>
-      <div style="background: rgba(15,23,42,0.6); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--admin-border);">
-        <div style="font-size: 0.7rem; color: var(--slate-400);">DECOR STYLING</div>
-        <div style="font-size: 1.25rem; font-weight: 700; color: #fff; margin: 0.25rem 0;">KES ${decorTotal.toLocaleString()}</div>
-        <div style="font-size: 0.7rem; color: var(--emerald-500);">${Math.round((decorTotal/grandTotal)*100)}% of total</div>
-      </div>
-    </div>
-  `;
-}
-
-// Analytics Scenario Benchmarking Controls
+// Analytics Scenario & Follow-up Controls
 function initAnalyticsControls() {
   document.querySelectorAll('.scenario-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -1430,7 +1915,16 @@ function initAnalyticsControls() {
       btn.classList.add('active');
       activeBenchmarkKES = Number(btn.getAttribute('data-target'));
       activeBenchmarkLabel = btn.getAttribute('data-label');
-      renderRecoveryChart();
+      renderAnalyticsCharts();
+    });
+  });
+
+  document.querySelectorAll('.followup-filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.followup-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeFollowupFilter = btn.getAttribute('data-filter') || 'all';
+      renderFollowupMatrix();
     });
   });
 

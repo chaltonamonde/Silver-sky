@@ -24,6 +24,9 @@
 
   <!-- Confetti Celebration Library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <!-- Chart.js Interactive Visualizations -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 </head>
 
 <body class="admin-body">
@@ -382,13 +385,15 @@
            MODULE 2: EXECUTIVE ANALYTICS HUB
            ========================================== -->
       <section id="module-analytics" class="admin-module">
-        <!-- Interactive Scenario Selector -->
+        <!-- Interactive Scenario & Timeframe Selector -->
         <div class="admin-card" style="padding: 1.25rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
           <div>
-            <div style="font-weight: 700; color: #fff; font-size: 0.9rem;">Target Benchmarking Case</div>
-            <div style="font-size: 0.725rem; color: var(--slate-400);">Switch projection model to dynamically audit revenue leakage recovery</div>
+            <div style="font-weight: 700; color: #fff; font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem;">
+              <span>🎯</span> Target Benchmarking & Scenario Analysis
+            </div>
+            <div style="font-size: 0.725rem; color: var(--slate-400);">Audit real-time cashflow against calibrated growth benchmarks</div>
           </div>
-          <div style="display: flex; gap: 0.5rem;">
+          <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
             <button class="filter-tab scenario-btn" data-target="1300000" data-label="Conservative">Conservative (KES 1.3M)</button>
             <button class="filter-tab scenario-btn active" data-target="6300000" data-label="Mid-Case Audit">Mid-Case Audit (KES 6.3M)</button>
             <button class="filter-tab scenario-btn" data-target="24800000" data-label="Aggressive Scale">Aggressive Scale (KES 24.8M)</button>
@@ -398,45 +403,159 @@
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
-          <!-- Revenue Recovery -->
-          <div class="admin-card">
-            <div class="admin-card-header">
-              <div>
-                <h3 class="admin-card-title"><span>📈</span> Revenue Leakage Recovery Progression</h3>
-                <div style="font-size: 0.725rem; color: var(--slate-400);" id="recovery-subhead">KES 7,450,000 Recovered to date (Target: KES 6,300,000)</div>
-              </div>
-              <span class="status-pill status-confirmed" id="recovery-badge">+118.2% Target Exceeded</span>
+        <!-- Cashflow Metric Strip -->
+        <div class="analytics-metrics-strip">
+          <div class="analytics-metric-box emerald">
+            <div class="analytics-metric-title">Verified Escrow Collected</div>
+            <div class="analytics-metric-value" id="analytics-metric-collected">KES 3.57M</div>
+            <div class="analytics-metric-sub">
+              <span style="color: var(--emerald-500); font-weight: 700;">● 100% Locked</span> via Safaricom Daraja
             </div>
-            <div style="padding: 1.5rem;">
-              <div id="recovery-bars-container">
-                <!-- Injected via JS -->
+          </div>
+          <div class="analytics-metric-box gold">
+            <div class="analytics-metric-title">Pending Contract Pipeline</div>
+            <div class="analytics-metric-value" id="analytics-metric-pipeline">KES 14.8M</div>
+            <div class="analytics-metric-sub">
+              <span style="color: var(--candlelight-amber); font-weight: 700;">● Actionable</span> 6 active inquiries
+            </div>
+          </div>
+          <div class="analytics-metric-box sky">
+            <div class="analytics-metric-title">Dominant Service Category</div>
+            <div class="analytics-metric-value" id="analytics-metric-topservice" style="font-size: 1.25rem;">Weddings (45%)</div>
+            <div class="analytics-metric-sub">
+              <span style="color: #38bdf8;">KES 1.6M</span> collected across dome setups
+            </div>
+          </div>
+          <div class="analytics-metric-box">
+            <div class="analytics-metric-title">Top Yielding Package</div>
+            <div class="analytics-metric-value" id="analytics-metric-toppackage" style="font-size: 1.15rem;">Royal Opulence</div>
+            <div class="analytics-metric-sub">
+              <span style="color: var(--cobalt-400);">KES 2.65M Avg</span> • 40% escrow lock
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 1: Flow of Cash per Service Category & per Package -->
+        <div class="chart-grid-2col">
+          <!-- Chart 1: Cashflow per Service Category -->
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="admin-card-title"><span>📊</span> Cash Flow per Service Category</h3>
+                <div style="font-size: 0.725rem; color: var(--slate-400);">Escrow collections & revenue share across service lines</div>
+              </div>
+              <span class="status-pill status-operational" id="service-cashflow-total-pill">Total: KES 3.57M</span>
+            </div>
+            <div class="donut-chart-container">
+              <div class="donut-canvas-side">
+                <canvas id="chart-service-cashflow"></canvas>
+              </div>
+              <div id="service-cashflow-legend-list" class="donut-legend-side">
+                <!-- Dynamically generated breakdown -->
               </div>
             </div>
           </div>
 
-          <!-- Conversion Funnel -->
-          <div class="admin-card">
-            <div class="admin-card-header">
-              <h3 class="admin-card-title"><span>🎯</span> CRO Conversion Funnel</h3>
-              <span style="font-size: 0.725rem; color: var(--slate-400);">Visitors to Escrow Paid</span>
+          <!-- Chart 2: Cashflow & Pipeline per Package -->
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="admin-card-title"><span>💼</span> Cash Flow & Pipeline per Package</h3>
+                <div style="font-size: 0.725rem; color: var(--slate-400);">Secured escrow deposits vs outstanding contract balances</div>
+              </div>
+              <span class="status-pill status-new">5 Active Packages</span>
             </div>
-            <div style="padding: 1.5rem;">
-              <div id="cro-funnel-container">
-                <!-- Injected via JS -->
+            <div class="chart-canvas-wrapper">
+              <canvas id="chart-package-cashflow"></canvas>
+            </div>
+            <div class="chart-legend-custom">
+              <div class="legend-item">
+                <span class="legend-color-dot" style="background: #10b981;"></span>
+                <span>Secured Escrow Deposit (Paid)</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-color-dot" style="background: #f59e0b;"></span>
+                <span>Pending Contract Balance (To Collect)</span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Cashflow by Service Category -->
+        <!-- Row 2: Monthly Trajectory Curve & Conversion Funnel -->
+        <div class="chart-grid-2col">
+          <!-- Chart 3: Monthly Cashflow Velocity & Target Trajectory -->
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="admin-card-title"><span>📈</span> Revenue Trajectory & Monthly Velocity</h3>
+                <div style="font-size: 0.725rem; color: var(--slate-400);" id="trajectory-subhead">Actual Recovered Collections vs Target Benchmark</div>
+              </div>
+              <span class="status-pill status-confirmed" id="trajectory-status-badge">+118% Target Exceeded</span>
+            </div>
+            <div class="chart-canvas-wrapper">
+              <canvas id="chart-monthly-trajectory"></canvas>
+            </div>
+            <div class="chart-legend-custom">
+              <div class="legend-item">
+                <span class="legend-color-dot" style="background: #38bdf8;"></span>
+                <span>Actual Escrow Collected (KES)</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-color-dot" style="background: #64748b; border: 1px dashed #94a3b8;"></span>
+                <span>Benchmark Growth Model (Target)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chart 4: CRO Conversion Funnel -->
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div>
+                <h3 class="admin-card-title"><span>🎯</span> CRO Pipeline Conversion Funnel</h3>
+                <div style="font-size: 0.725rem; color: var(--slate-400);">End-to-end journey: Unique Visitors to 40% Escrow Paid</div>
+              </div>
+              <span class="status-pill status-in-discussion">32.4% Final Close Rate</span>
+            </div>
+            <div class="chart-canvas-wrapper">
+              <canvas id="chart-funnel-stages"></canvas>
+            </div>
+            <div style="font-size: 0.7rem; color: var(--slate-400); text-align: center; margin-top: 0.5rem;">
+              💡 <em>Highest drop occurs between Quote Calculator and Site Inspection — instant WhatsApp follow-up recovers ~28% of dropouts.</em>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 3: Actionable Follow-Up Matrix (Cashflow at Risk & Fast Recovery) -->
         <div class="admin-card">
           <div class="admin-card-header">
-            <h3 class="admin-card-title"><span>💰</span> Escrow Cashflow Breakdown by Category</h3>
-            <span style="font-size: 0.725rem; color: var(--slate-400);">Weddings vs Corporate Summits vs Equipment Rental</span>
+            <div>
+              <h3 class="admin-card-title"><span>⚡</span> Priority Cashflow Follow-Up Matrix</h3>
+              <div style="font-size: 0.725rem; color: var(--slate-400);">Actionable deals: track outstanding cash per client, package, and service with 1-click follow-up triggers</div>
+            </div>
+            <div class="filter-tabs">
+              <button class="filter-tab followup-filter-btn active" data-filter="all">All Deals (6)</button>
+              <button class="filter-tab followup-filter-btn" data-filter="action-needed">⚠️ Action Needed</button>
+              <button class="filter-tab followup-filter-btn" data-filter="weddings">Weddings</button>
+              <button class="filter-tab followup-filter-btn" data-filter="corporate">Corporate</button>
+            </div>
           </div>
-          <div style="padding: 1.5rem;" id="cashflow-category-breakdown">
-            <!-- Injected via JS -->
+          <div class="admin-table-container">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Client & Event</th>
+                  <th>Service & Package</th>
+                  <th>Total Contract</th>
+                  <th>Escrow Secured</th>
+                  <th>Pending Cash Balance</th>
+                  <th>Urgency / Status</th>
+                  <th>Instant Follow-Up Action</th>
+                </tr>
+              </thead>
+              <tbody id="followup-matrix-tbody">
+                <!-- Dynamically populated rows with WhatsApp, Call & STK triggers -->
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
