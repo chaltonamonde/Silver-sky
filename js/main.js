@@ -830,7 +830,7 @@ function initMpesaModal() {
           particleCount: 120,
           spread: 80,
           origin: { y: 0.6 },
-          colors: ['#f59e0b', '#2563eb', '#10b981', '#fbbf24']
+          colors: ['#D9A86C', '#5F8FB3', '#047857', '#8FB8D6']  /* theme-consistent palette */
         });
       }
     }, 2000);

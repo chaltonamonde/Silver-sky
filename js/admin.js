@@ -725,9 +725,9 @@ function openReceiptModal(tx) {
   content.innerHTML = `
     <div class="official-receipt-sheet">
       <!-- Safaricom Header -->
-      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #009b3a; padding-bottom: 0.75rem; margin-bottom: 1.25rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #007a2f; padding-bottom: 0.75rem; margin-bottom: 1.25rem;">
         <div style="display: flex; align-items: center; gap: 0.75rem;">
-          <div style="background: #009b3a; color: var(--surface); font-weight: 900; font-size: 1rem; padding: 0.4rem 0.75rem; border-radius: 4px;">
+          <div style="background: #007a2f; color: var(--surface); font-weight: 900; font-size: 1rem; padding: 0.4rem 0.75rem; border-radius: 4px;">
             M-PESA
           </div>
           <div>
@@ -735,7 +735,7 @@ function openReceiptModal(tx) {
             <div style="font-size: 0.7rem; color: var(--ink-muted);">Paybill: <strong>782910</strong> • Silver Sky Events & Infrastructure Ltd</div>
           </div>
         </div>
-        <span style="background: #dcfce7; color: #166534; font-weight: 700; font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 4px;">VERIFIED PAID</span>
+        <span style="background: #dcfce7; color: #14532d; font-weight: 800; font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 4px;">VERIFIED PAID</span>
       </div>
 
       <!-- Details Grid -->
@@ -768,12 +768,12 @@ function openReceiptModal(tx) {
       </div>
 
       <!-- QR & Verification Footer -->
-      <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed #cbd5e1; padding-top: 1rem; font-size: 0.725rem; color: #64748b;">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed var(--border); padding-top: 1rem; font-size: 0.725rem; color: var(--ink-muted);">
         <div>
           <div>🛡️ Cryptographically signed by Safaricom PLC API gateway.</div>
           <div>Funds are held in secure escrow per Kenya Consumer Banking laws.</div>
         </div>
-        <div style="width: 50px; height: 50px; border: 1px solid #94a3b8; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-family: monospace; text-align: center;">
+        <div style="width: 50px; height: 50px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-family: monospace; text-align: center; color: var(--ink-muted);">
           QR VERIFIED
         </div>
       </div>
@@ -882,7 +882,7 @@ function renderLeadsTable() {
           <button class="btn btn-glass edit-lead-btn" data-id="${lead.id}" style="padding: 0.3rem 0.55rem; font-size: 0.725rem;" title="Edit Lead">
             ✏️
           </button>
-          <button class="btn btn-glass delete-lead-btn" data-id="${lead.id}" style="padding: 0.3rem 0.55rem; font-size: 0.725rem; color: #f87171;" title="Delete Lead">
+          <button class="btn btn-glass delete-lead-btn" data-id="${lead.id}" style="padding: 0.3rem 0.55rem; font-size: 0.725rem; color: #991b1b;" title="Delete Lead">
             🗑️
           </button>
           <a href="https://wa.me/254${lead.phone.replace(/[^0-9]/g, '').slice(-9)}" target="_blank" class="btn btn-emerald" style="padding: 0.3rem 0.55rem; font-size: 0.725rem; text-decoration: none;" title="WhatsApp">
@@ -1031,7 +1031,7 @@ function renderInventoryTable() {
           <button class="status-pill status-${item.status.toLowerCase().replace(/\s+/g, '-')} toggle-asset-status-btn" data-id="${item.id}" style="cursor: pointer; border: 1px dashed var(--border);" title="Click to cycle status">
             ${item.status} ↻
           </button>
-          <button class="btn btn-glass delete-asset-btn" data-id="${item.id}" style="padding: 0.25rem 0.5rem; font-size: 0.7rem; color: #f87171;" title="Delete Asset">
+          <button class="btn btn-glass delete-asset-btn" data-id="${item.id}" style="padding: 0.25rem 0.5rem; font-size: 0.7rem; color: #991b1b;" title="Delete Asset">
             🗑️
           </button>
         </div>
@@ -1090,7 +1090,7 @@ function renderCalendarTable() {
         <div>⚡ ${item.generatorsAssigned}</div>
       </td>
       <td>
-        <button class="btn btn-glass cancel-booking-btn" data-id="${item.id}" style="padding: 0.3rem 0.55rem; font-size: 0.725rem; color: #f87171;">
+        <button class="btn btn-glass cancel-booking-btn" data-id="${item.id}" style="padding: 0.3rem 0.55rem; font-size: 0.725rem; color: #991b1b;">
           Cancel / Delete
         </button>
       </td>
@@ -1192,7 +1192,7 @@ function renderPackagesGrid() {
         <button class="btn btn-glass duplicate-pkg-btn" data-id="${pkg.id}" style="padding: 0.45rem 0.65rem; font-size: 0.75rem;" title="Duplicate Package">
           📋
         </button>
-        <button class="btn btn-glass delete-pkg-btn" data-id="${pkg.id}" style="padding: 0.45rem 0.65rem; font-size: 0.75rem; color: #f87171;" title="Delete Package">
+        <button class="btn btn-glass delete-pkg-btn" data-id="${pkg.id}" style="padding: 0.45rem 0.65rem; font-size: 0.75rem; color: #991b1b;" title="Delete Package">
           🗑️
         </button>
       </div>
@@ -1281,7 +1281,7 @@ function renderPortfolioGrid() {
           <button class="btn btn-glass toggle-publish-btn" data-id="${item.id}" style="flex: 1; padding: 0.35rem; font-size: 0.7rem;">
             ${item.status === 'Published' ? 'Unpublish' : 'Publish'}
           </button>
-          <button class="btn btn-glass delete-casestudy-btn" data-id="${item.id}" style="padding: 0.35rem 0.6rem; font-size: 0.7rem; color: #f87171;" title="Delete">
+          <button class="btn btn-glass delete-casestudy-btn" data-id="${item.id}" style="padding: 0.35rem 0.6rem; font-size: 0.7rem; color: #991b1b;" title="Delete">
             🗑️
           </button>
         </div>
@@ -1396,9 +1396,9 @@ function renderAnalyticsCharts() {
   }
 
   // Configure Chart.js global theme defaults
-  Chart.defaults.color = '#5C6B79';
+  Chart.defaults.color = '#475563';  /* darkened from #5C6B79 — axis/tick labels now 4.5:1+ */
   Chart.defaults.font.family = "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif";
-  Chart.defaults.borderColor = 'rgba(221, 213, 195, 0.6)';
+  Chart.defaults.borderColor = 'rgba(197, 186, 165, 0.6)';  /* matches updated --border */
 
   // 1. Service Categories Breakdown
   const catNames = ['Weddings', 'Corporate Contracts', 'Equipment Hire', 'Decor Styling'];

@@ -133,7 +133,7 @@ body.admin-body {
 
 .admin-user-role {
   font-size: 0.7rem;
-  color: var(--slate-400);
+  color: var(--ink-muted);  /* #475563 */
 }
 
 /* Sidebar Nav */
@@ -152,7 +152,7 @@ body.admin-body {
   justify-content: space-between;
   padding: 0.7rem 0.9rem;
   border-radius: var(--radius-sm);
-  color: var(--ink-muted);
+  color: var(--ink);     /* full ink on sidebar for clear readability */
   text-decoration: none;
   font-size: 0.8125rem;
   font-weight: 600;
@@ -196,14 +196,14 @@ body.admin-body {
   padding: 0.15rem 0.45rem;
   border-radius: 999px;
   background: var(--sky-soft);
-  color: var(--sky-deep);
+  color: #3A6A90;   /* darker than --sky-deep: 4.5:1+ on sky-soft */
   border: 1px solid var(--sky);
   font-weight: 700;
 }
 
 .admin-nav-badge.badge-emerald {
   background: var(--sky-soft);
-  color: var(--sky-deep);
+  color: #3A6A90;
   border-color: var(--sky);
 }
 
@@ -244,7 +244,7 @@ body.admin-body {
   align-items: center;
   gap: 0.5rem;
   font-size: 0.7rem;
-  color: var(--slate-400);
+  color: var(--ink-muted);  /* #475563 — legible on sidebar bg */
 }
 
 .status-dot-pulse {
@@ -320,7 +320,7 @@ body.admin-body {
 
 .admin-page-subtitle {
   font-size: 0.725rem;
-  color: var(--slate-400);
+  color: var(--ink-muted);  /* #475563 */
 }
 
 .admin-topbar-right {
@@ -357,7 +357,7 @@ body.admin-body {
   position: absolute;
   left: 0.85rem;
   font-size: 0.85rem;
-  color: var(--slate-400);
+  color: var(--ink-muted);  /* #475563 */
   pointer-events: none;
 }
 
@@ -448,10 +448,10 @@ body.admin-body {
 
 .kpi-label {
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--slate-400);
+  color: var(--ink-muted);  /* #475563 — 4.5:1+ on surface */
 }
 
 .kpi-icon-box {
@@ -489,7 +489,7 @@ body.admin-body {
   align-items: center;
   justify-content: space-between;
   font-size: 0.725rem;
-  color: var(--slate-400);
+  color: var(--ink-muted);  /* #475563 */
 }
 
 .trend-badge {
@@ -504,8 +504,8 @@ body.admin-body {
 
 .trend-badge.positive {
   background: rgba(16, 185, 129, 0.15);
-  color: #34d399;
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #047857;   /* dark green — 5.1:1 on white/cream */
+  border: 1px solid rgba(16, 185, 129, 0.4);
 }
 
 /* ----------------- DATA TABLES & PANELS ----------------- */
@@ -563,7 +563,7 @@ body.admin-body {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--ink-muted);
+  color: var(--ink-muted);  /* #475563 — meets 4.5:1 on bg-alt */
   border-bottom: 1px solid var(--admin-border);
   white-space: nowrap;
 }
@@ -598,8 +598,8 @@ body.admin-body {
 .status-pill.status-confirmed,
 .status-pill.status-operational {
   background: rgba(16, 185, 129, 0.15);
-  color: #34d399;
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #047857;   /* dark green 5.1:1 — was #34d399 which fails */
+  border: 1px solid rgba(16, 185, 129, 0.4);
 }
 
 .status-pill.status-new,
@@ -612,15 +612,15 @@ body.admin-body {
 .status-pill.status-in-discussion,
 .status-pill.status-deployed {
   background: rgba(245, 158, 11, 0.15);
-  color: #fbbf24;
-  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: #78450A;   /* dark amber — was #fbbf24 which fails (2.1:1) */
+  border: 1px solid rgba(245, 158, 11, 0.4);
 }
 
 .status-pill.status-deposit-pending,
 .status-pill.status-under-inspection {
   background: rgba(239, 68, 68, 0.15);
-  color: #f87171;
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #991b1b;   /* dark red — was #f87171 which fails (2.0:1) */
+  border: 1px solid rgba(239, 68, 68, 0.4);
 }
 
 /* Filter Bar */
@@ -973,7 +973,7 @@ body.admin-body {
 .calendar-day-num {
   font-size: 0.75rem;
   font-weight: 700;
-  color: var(--ink-muted);
+  color: var(--ink-muted);  /* #475563 — legible on surface cell */
 }
 
 .calendar-day-cell.today .calendar-day-num {
@@ -998,7 +998,7 @@ body.admin-body {
 .calendar-event-pill.conflict {
   background: #fee2e2;
   border-color: #fca5a5;
-  color: #991b1b;
+  color: #7f1d1d;   /* darkened from #991b1b for extra safety margin */
 }
 
 /* ==========================================================

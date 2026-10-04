@@ -15,9 +15,9 @@
   --sky: #8FB8D6;           /* primary sky blue, muted not neon (30%) */
   --sky-deep: #5F8FB3;      /* hover states, links, active elements */
   --sky-soft: #D6E6F1;      /* tints, badges, subtle highlights */
-  --ink: #2C3E50;           /* main text, soft navy instead of pure black */
-  --ink-muted: #5C6B79;     /* secondary text (meets WCAG AA > 5.2:1) */
-  --border: #DDD5C3;        /* hairline borders on cream */
+  --ink: #1A2B3C;           /* main text — dark navy, 8:1+ on cream */
+  --ink-muted: #475563;     /* secondary text — min 4.5:1 on cream (WCAG AA) */
+  --border: #C5BAA5;        /* hairline borders — visible on cream bg */
   --accent: #D9A86C;        /* optional warm accent for CTAs, used sparingly (~10%) */
 
   /* Button Specific Tones (WCAG AA Compliant) */
@@ -225,13 +225,13 @@ p {
 .badge-gold {
   background: rgba(217, 168, 108, 0.16);
   border: 1px solid var(--accent);
-  color: #8F5E24;
+  color: #7A4F1C;
 }
 
 .badge-blue {
   background: var(--sky-soft);
   border: 1px solid var(--sky);
-  color: var(--sky-deep);
+  color: #3A6A90;    /* darker than --sky-deep for 4.5:1+ on sky-soft */
 }
 
 .badge-emerald {
@@ -477,7 +477,7 @@ p {
   gap: 1.75rem;
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--ink-muted);
+  color: var(--ink);    /* nav links use full ink, not muted — important for readability */
 }
 
 @media (min-width: 1024px) {
@@ -882,7 +882,7 @@ p {
 .case-card-img-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 40%, rgba(44, 62, 80, 0.4) 100%);
+  background: linear-gradient(180deg, transparent 30%, rgba(22, 34, 45, 0.65) 100%);
 }
 
 .case-card-body {
@@ -929,7 +929,7 @@ p {
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--sky-deep);
+  color: #3A6A90;    /* darker for 4.5:1+ on cream (sky-deep #5F8FB3 only 2.9:1) */
   margin-bottom: 0.75rem;
   display: flex;
   align-items: center;
@@ -1088,8 +1088,8 @@ p {
 }
 
 .form-input::placeholder {
-  color: var(--ink-muted);
-  opacity: 0.7;
+  color: var(--ink-muted);   /* #475563 — no opacity reduction, already soft */
+  opacity: 1;
 }
 
 .form-input:focus {
@@ -1472,7 +1472,7 @@ p {
 }
 
 .close-btn:hover {
-  background: var(--sky);
+  background: var(--sky-deep);
   color: var(--surface);
 }
 
