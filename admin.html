@@ -41,7 +41,7 @@
       </div>
       <h2 style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--ink); margin-bottom: 0.25rem;">Silver Sky Operations</h2>
       <p style="font-size: 0.775rem; color: var(--slate-400); margin-bottom: 0.5rem;">Confidential Director Access Only</p>
-      <div style="font-size: 0.7rem; color: var(--candlelight-amber); background: rgba(245,158,11,0.1); padding: 0.35rem 0.65rem; border-radius: 4px; display: inline-block;">
+      <div style="font-size: 0.7rem; color: var(--accent); background: var(--accent-glow); padding: 0.35rem 0.65rem; border-radius: 4px; display: inline-block; border: 1px solid var(--border);">
         Default Director PIN: <strong>2026</strong>
       </div>
 
@@ -54,7 +54,7 @@
       </div>
 
       <!-- Error / Status Text -->
-      <div id="lockscreen-msg" style="font-size: 0.75rem; min-height: 1.25rem; color: #f87171;"></div>
+      <div id="lockscreen-msg" style="font-size: 0.75rem; min-height: 1.25rem; color: var(--error);"></div>
 
       <!-- Keypad -->
       <div class="pin-keypad">
@@ -338,7 +338,7 @@
               <p style="font-size: 0.75rem; color: var(--slate-300); line-height: 1.4;">
                 Initiate an instant Safaricom Daraja STK Push prompt to lock a client's date directly into our Paybill <strong>782910</strong>.
               </p>
-              <div style="background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); padding: 0.75rem; border-radius: var(--radius-sm); font-size: 0.725rem; color: #047857;">
+              <div style="background: var(--success-bg); border: 1px solid var(--success-border); padding: 0.75rem; border-radius: var(--radius-sm); font-size: 0.725rem; color: var(--success);">
                 🛡️ Instant calendar hold upon PIN confirmation.
               </div>
               <div style="display: flex; gap: 0.5rem;">
@@ -374,7 +374,7 @@
               📤 Restore Backup
               <input type="file" id="import-backup-file" accept=".json" style="display: none;">
             </label>
-            <button id="reset-demo-btn" class="btn btn-glass" style="padding: 0.4rem 0.75rem; font-size: 0.75rem; color: #f87171;">
+            <button id="reset-demo-btn" class="btn btn-glass" style="padding: 0.4rem 0.75rem; font-size: 0.75rem; color: var(--error);">
               🔄 Reset Demo Data
             </button>
           </div>
@@ -470,7 +470,7 @@
             </div>
             <div class="chart-legend-custom">
               <div class="legend-item">
-                <span class="legend-color-dot" style="background: #10b981;"></span>
+                <span class="legend-color-dot" style="background: var(--success);"></span>
                 <span>Secured Escrow Deposit (Paid)</span>
               </div>
               <div class="legend-item">
@@ -689,7 +689,7 @@
            ========================================== -->
       <section id="module-calendar" class="admin-module">
         <!-- Conflict Detector Warning Banner -->
-        <div id="calendar-conflict-alert" style="display: none; background: #fee2e2; border: 1px solid #fca5a5; border-radius: var(--radius-sm); padding: 0.85rem 1.25rem; margin-bottom: 1.25rem; color: #991b1b; font-size: 0.8rem; align-items: center; justify-content: space-between;">
+        <div id="calendar-conflict-alert" style="display: none; background: var(--error-bg); border: 1px solid var(--error-border); border-radius: var(--radius-sm); padding: 0.85rem 1.25rem; margin-bottom: 1.25rem; color: var(--error); font-size: 0.8rem; align-items: center; justify-content: space-between;">
           <div style="display: flex; align-items: center; gap: 0.65rem;">
             <span style="font-size: 1.2rem;">⚠️</span>
             <span><strong>Asset Allocation Warning:</strong> Multiple bookings detected on overlapping dates requiring the same technical setup.</span>
@@ -1009,7 +1009,7 @@
     <div class="modal-dialog glass-sapphire" style="max-width: 500px;">
       <div class="modal-header">
         <div style="display: flex; align-items: center; gap: 0.75rem;">
-          <div style="background: #009b3a; color: var(--surface); font-weight: 900; font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 4px;">
+          <div style="background: var(--success); color: var(--bg-base); font-weight: 900; font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 4px;">
             M-PESA
           </div>
           <div>

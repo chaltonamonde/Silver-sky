@@ -701,7 +701,7 @@ function openProposalModal(lead) {
         <div style="text-align: right;">
           <div style="font-size: 0.75rem; color: var(--ink-muted);">Total Production Value:</div>
           <div style="font-size: 1.4rem; font-weight: 800; color: var(--ink);">KES ${lead.estimatedKES.toLocaleString()}</div>
-          <div style="font-size: 0.8rem; font-weight: 700; color: #047857;">40% Deposit to Lock: KES ${lead.depositKES.toLocaleString()}</div>
+          <div style="font-size: 0.8rem; font-weight: 700; color: var(--success);">40% Deposit to Lock: KES ${lead.depositKES.toLocaleString()}</div>
         </div>
       </div>
     </div>
@@ -725,17 +725,17 @@ function openReceiptModal(tx) {
   content.innerHTML = `
     <div class="official-receipt-sheet">
       <!-- Safaricom Header -->
-      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #007a2f; padding-bottom: 0.75rem; margin-bottom: 1.25rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--success); padding-bottom: 0.75rem; margin-bottom: 1.25rem;">
         <div style="display: flex; align-items: center; gap: 0.75rem;">
-          <div style="background: #007a2f; color: var(--surface); font-weight: 900; font-size: 1rem; padding: 0.4rem 0.75rem; border-radius: 4px;">
+          <div style="background: var(--success); color: var(--bg-base); font-weight: 900; font-size: 1rem; padding: 0.4rem 0.75rem; border-radius: 4px;">
             M-PESA
           </div>
           <div>
-            <div style="font-weight: 800; font-size: 1.1rem; color: var(--ink);">SAFARICOM DARAJA ESCROW RECEIPT</div>
-            <div style="font-size: 0.7rem; color: var(--ink-muted);">Paybill: <strong>782910</strong> • Silver Sky Events & Infrastructure Ltd</div>
+            <div style="font-weight: 800; font-size: 1.1rem; color: var(--text-primary);">SAFARICOM DARAJA ESCROW RECEIPT</div>
+            <div style="font-size: 0.7rem; color: var(--text-secondary);">Paybill: <strong>782910</strong> • Silver Sky Events & Infrastructure Ltd</div>
           </div>
         </div>
-        <span style="background: #dcfce7; color: #14532d; font-weight: 800; font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 4px;">VERIFIED PAID</span>
+        <span style="background: var(--success-bg); color: var(--success); border: 1px solid var(--success-border); font-weight: 800; font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 4px;">VERIFIED PAID</span>
       </div>
 
       <!-- Details Grid -->
@@ -882,7 +882,7 @@ function renderLeadsTable() {
           <button class="btn btn-glass edit-lead-btn" data-id="${lead.id}" style="padding: 0.3rem 0.55rem; font-size: 0.725rem;" title="Edit Lead">
             ✏️
           </button>
-          <button class="btn btn-glass delete-lead-btn" data-id="${lead.id}" style="padding: 0.3rem 0.55rem; font-size: 0.725rem; color: #991b1b;" title="Delete Lead">
+          <button class="btn btn-glass delete-lead-btn" data-id="${lead.id}" style="padding: 0.3rem 0.55rem; font-size: 0.725rem; color: var(--error);" title="Delete Lead">
             🗑️
           </button>
           <a href="https://wa.me/254${lead.phone.replace(/[^0-9]/g, '').slice(-9)}" target="_blank" class="btn btn-emerald" style="padding: 0.3rem 0.55rem; font-size: 0.725rem; text-decoration: none;" title="WhatsApp">
@@ -1031,7 +1031,7 @@ function renderInventoryTable() {
           <button class="status-pill status-${item.status.toLowerCase().replace(/\s+/g, '-')} toggle-asset-status-btn" data-id="${item.id}" style="cursor: pointer; border: 1px dashed var(--border);" title="Click to cycle status">
             ${item.status} ↻
           </button>
-          <button class="btn btn-glass delete-asset-btn" data-id="${item.id}" style="padding: 0.25rem 0.5rem; font-size: 0.7rem; color: #991b1b;" title="Delete Asset">
+          <button class="btn btn-glass delete-asset-btn" data-id="${item.id}" style="padding: 0.25rem 0.5rem; font-size: 0.7rem; color: var(--error);" title="Delete Asset">
             🗑️
           </button>
         </div>
@@ -1090,7 +1090,7 @@ function renderCalendarTable() {
         <div>⚡ ${item.generatorsAssigned}</div>
       </td>
       <td>
-        <button class="btn btn-glass cancel-booking-btn" data-id="${item.id}" style="padding: 0.3rem 0.55rem; font-size: 0.725rem; color: #991b1b;">
+        <button class="btn btn-glass cancel-booking-btn" data-id="${item.id}" style="padding: 0.3rem 0.55rem; font-size: 0.725rem; color: var(--error);">
           Cancel / Delete
         </button>
       </td>
@@ -1192,7 +1192,7 @@ function renderPackagesGrid() {
         <button class="btn btn-glass duplicate-pkg-btn" data-id="${pkg.id}" style="padding: 0.45rem 0.65rem; font-size: 0.75rem;" title="Duplicate Package">
           📋
         </button>
-        <button class="btn btn-glass delete-pkg-btn" data-id="${pkg.id}" style="padding: 0.45rem 0.65rem; font-size: 0.75rem; color: #991b1b;" title="Delete Package">
+        <button class="btn btn-glass delete-pkg-btn" data-id="${pkg.id}" style="padding: 0.45rem 0.65rem; font-size: 0.75rem; color: var(--error);" title="Delete Package">
           🗑️
         </button>
       </div>
@@ -1281,7 +1281,7 @@ function renderPortfolioGrid() {
           <button class="btn btn-glass toggle-publish-btn" data-id="${item.id}" style="flex: 1; padding: 0.35rem; font-size: 0.7rem;">
             ${item.status === 'Published' ? 'Unpublish' : 'Publish'}
           </button>
-          <button class="btn btn-glass delete-casestudy-btn" data-id="${item.id}" style="padding: 0.35rem 0.6rem; font-size: 0.7rem; color: #991b1b;" title="Delete">
+          <button class="btn btn-glass delete-casestudy-btn" data-id="${item.id}" style="padding: 0.35rem 0.6rem; font-size: 0.7rem; color: var(--error);" title="Delete">
             🗑️
           </button>
         </div>
@@ -1396,13 +1396,13 @@ function renderAnalyticsCharts() {
   }
 
   // Configure Chart.js global theme defaults
-  Chart.defaults.color = '#3D4F61';  /* refined slate navy — 7:1+ contrast */
+  Chart.defaults.color = '#94A3B8';  /* sky dark theme secondary text */
   Chart.defaults.font.family = "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif";
-  Chart.defaults.borderColor = 'rgba(229, 223, 213, 0.7)';  /* matches elevated --border */
+  Chart.defaults.borderColor = 'rgba(36, 48, 73, 0.5)';  /* matches --border */
 
   // 1. Service Categories Breakdown
   const catNames = ['Weddings', 'Corporate Contracts', 'Equipment Hire', 'Decor Styling'];
-  const catColors = ['#059669', '#1B4D75', '#5B96C2', '#C39348'];
+  const catColors = ['#34D399', '#38BDF8', '#818CF8', '#FBBF24'];
 
   const catEscrow = {};
   const catPipeline = {};
@@ -1487,7 +1487,7 @@ function renderAnalyticsCharts() {
         datasets: [{
           data: catNames.map(c => catEscrow[c]),
           backgroundColor: catColors,
-          borderColor: '#FBF8F1',
+          borderColor: '#111827',
           borderWidth: 2,
           hoverOffset: 6
         }]
@@ -1563,7 +1563,7 @@ function renderAnalyticsCharts() {
           {
             label: 'Secured Escrow Deposit',
             data: pkgNames.map(p => pkgEscrow[p]),
-            backgroundColor: '#059669',
+            backgroundColor: '#34D399',
             borderRadius: 4,
             barPercentage: 0.7,
             categoryPercentage: 0.8
@@ -1571,7 +1571,7 @@ function renderAnalyticsCharts() {
           {
             label: 'Pending Contract Balance',
             data: pkgNames.map(p => pkgPipeline[p]),
-            backgroundColor: '#C39348',
+            backgroundColor: '#38BDF8',
             borderRadius: 4,
             barPercentage: 0.7,
             categoryPercentage: 0.8
@@ -1595,7 +1595,7 @@ function renderAnalyticsCharts() {
             ticks: { font: { size: 11 }, maxRotation: 0 }
           },
           y: {
-            grid: { color: 'rgba(44, 62, 80, 0.08)' },
+            grid: { color: 'rgba(36, 48, 73, 0.5)' },
             ticks: {
               callback: (v) => 'KES ' + (v / 1000000).toFixed(1) + 'M',
               font: { size: 10 }
@@ -1615,8 +1615,8 @@ function renderAnalyticsCharts() {
     const ctx = trajectoryCanvas.getContext('2d');
 
     const grad = ctx.createLinearGradient(0, 0, 0, 260);
-    grad.addColorStop(0, 'rgba(143, 184, 214, 0.35)');
-    grad.addColorStop(1, 'rgba(143, 184, 214, 0.00)');
+    grad.addColorStop(0, 'rgba(56, 189, 248, 0.35)');
+    grad.addColorStop(1, 'rgba(56, 189, 248, 0.00)');
 
     const months = MONTHLY_RECOVERY_DATA.map(d => d.month);
     const actuals = MONTHLY_RECOVERY_DATA.map(d => d.actualRecovered);
@@ -1649,12 +1649,12 @@ function renderAnalyticsCharts() {
           {
             label: 'Actual Escrow Recovered',
             data: actuals,
-            borderColor: '#1B4D75',
+            borderColor: '#38BDF8',
             backgroundColor: grad,
             fill: true,
             tension: 0.35,
-            pointBackgroundColor: '#1B4D75',
-            pointBorderColor: '#FFFFFF',
+            pointBackgroundColor: '#38BDF8',
+            pointBorderColor: '#0A0F1A',
             pointBorderWidth: 2,
             pointRadius: 4,
             pointHoverRadius: 7
@@ -1662,7 +1662,7 @@ function renderAnalyticsCharts() {
           {
             label: `Target Benchmark (${activeBenchmarkLabel})`,
             data: targets,
-            borderColor: '#E5DFD5',
+            borderColor: '#64748B',
             borderDash: [6, 4],
             pointRadius: 0,
             fill: false,
@@ -1687,7 +1687,7 @@ function renderAnalyticsCharts() {
             ticks: { font: { size: 10 } }
           },
           y: {
-            grid: { color: 'rgba(12, 25, 38, 0.06)' },
+            grid: { color: 'rgba(36, 48, 73, 0.5)' },
             ticks: {
               callback: (v) => 'KES ' + (v / 1000000).toFixed(1) + 'M',
               font: { size: 10 }
@@ -1717,11 +1717,11 @@ function renderAnalyticsCharts() {
           label: 'Conversions',
           data: stageCounts,
           backgroundColor: [
-            '#1B4D75',
-            '#5B96C2',
-            '#0d9488',
-            '#C39348',
-            '#059669'
+            '#38BDF8',
+            '#0EA5E9',
+            '#818CF8',
+            '#FBBF24',
+            '#34D399'
           ],
           borderRadius: 4,
           barPercentage: 0.65
@@ -1746,7 +1746,7 @@ function renderAnalyticsCharts() {
         },
         scales: {
           x: {
-            grid: { color: 'rgba(44, 62, 80, 0.08)' },
+            grid: { color: 'rgba(36, 48, 73, 0.5)' },
             ticks: {
               callback: (v) => v >= 1000 ? (v / 1000).toFixed(0) + 'k' : v,
               font: { size: 10 }
