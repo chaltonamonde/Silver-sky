@@ -1396,13 +1396,13 @@ function renderAnalyticsCharts() {
   }
 
   // Configure Chart.js global theme defaults
-  Chart.defaults.color = '#475563';  /* darkened from #5C6B79 — axis/tick labels now 4.5:1+ */
+  Chart.defaults.color = '#3D4F61';  /* refined slate navy — 7:1+ contrast */
   Chart.defaults.font.family = "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif";
-  Chart.defaults.borderColor = 'rgba(197, 186, 165, 0.6)';  /* matches updated --border */
+  Chart.defaults.borderColor = 'rgba(229, 223, 213, 0.7)';  /* matches elevated --border */
 
   // 1. Service Categories Breakdown
   const catNames = ['Weddings', 'Corporate Contracts', 'Equipment Hire', 'Decor Styling'];
-  const catColors = ['#10b981', '#5F8FB3', '#8FB8D6', '#D9A86C'];
+  const catColors = ['#059669', '#1B4D75', '#5B96C2', '#C39348'];
 
   const catEscrow = {};
   const catPipeline = {};
@@ -1563,7 +1563,7 @@ function renderAnalyticsCharts() {
           {
             label: 'Secured Escrow Deposit',
             data: pkgNames.map(p => pkgEscrow[p]),
-            backgroundColor: '#10b981',
+            backgroundColor: '#059669',
             borderRadius: 4,
             barPercentage: 0.7,
             categoryPercentage: 0.8
@@ -1571,7 +1571,7 @@ function renderAnalyticsCharts() {
           {
             label: 'Pending Contract Balance',
             data: pkgNames.map(p => pkgPipeline[p]),
-            backgroundColor: '#D9A86C',
+            backgroundColor: '#C39348',
             borderRadius: 4,
             barPercentage: 0.7,
             categoryPercentage: 0.8
@@ -1649,12 +1649,12 @@ function renderAnalyticsCharts() {
           {
             label: 'Actual Escrow Recovered',
             data: actuals,
-            borderColor: '#5F8FB3',
+            borderColor: '#1B4D75',
             backgroundColor: grad,
             fill: true,
             tension: 0.35,
-            pointBackgroundColor: '#5F8FB3',
-            pointBorderColor: '#FBF8F1',
+            pointBackgroundColor: '#1B4D75',
+            pointBorderColor: '#FFFFFF',
             pointBorderWidth: 2,
             pointRadius: 4,
             pointHoverRadius: 7
@@ -1662,7 +1662,7 @@ function renderAnalyticsCharts() {
           {
             label: `Target Benchmark (${activeBenchmarkLabel})`,
             data: targets,
-            borderColor: '#DDD5C3',
+            borderColor: '#E5DFD5',
             borderDash: [6, 4],
             pointRadius: 0,
             fill: false,
@@ -1687,7 +1687,7 @@ function renderAnalyticsCharts() {
             ticks: { font: { size: 10 } }
           },
           y: {
-            grid: { color: 'rgba(44, 62, 80, 0.08)' },
+            grid: { color: 'rgba(12, 25, 38, 0.06)' },
             ticks: {
               callback: (v) => 'KES ' + (v / 1000000).toFixed(1) + 'M',
               font: { size: 10 }
@@ -1717,11 +1717,11 @@ function renderAnalyticsCharts() {
           label: 'Conversions',
           data: stageCounts,
           backgroundColor: [
-            '#5F8FB3',
-            '#8FB8D6',
+            '#1B4D75',
+            '#5B96C2',
             '#0d9488',
-            '#D9A86C',
-            '#10b981'
+            '#C39348',
+            '#059669'
           ],
           borderRadius: 4,
           barPercentage: 0.65

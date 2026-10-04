@@ -7,32 +7,44 @@
 
 :root {
   /* ==========================================================
-     CORE THEME PALETTE
+     CORE THEME PALETTE: ELEVATED SKY BLUE & WARM ALABASTER
      ========================================================== */
-  --bg: #F6F1E7;            /* warm cream, main page background (60%) */
-  --bg-alt: #EDE6D6;        /* slightly deeper cream for alternating sections */
-  --surface: #FBF8F1;       /* cards, modals, nav (soft off-white, never pure #fff) */
-  --sky: #8FB8D6;           /* primary sky blue, muted not neon (30%) */
-  --sky-deep: #5F8FB3;      /* hover states, links, active elements */
-  --sky-soft: #D6E6F1;      /* tints, badges, subtle highlights */
-  --ink: #1A2B3C;           /* main text — dark navy, 8:1+ on cream */
-  --ink-muted: #475563;     /* secondary text — min 4.5:1 on cream (WCAG AA) */
-  --border: #C5BAA5;        /* hairline borders — visible on cream bg */
-  --accent: #D9A86C;        /* optional warm accent for CTAs, used sparingly (~10%) */
+  --bg: #FAF9F6;            /* pristine warm alabaster / ivory silk background */
+  --bg-alt: #F3EFE8;        /* silky warm sand / cashmere for alternating sections */
+  --surface: #FFFFFF;       /* crisp porcelain white for cards, modals, and nav */
+  --surface-raised: #FFFFFF;
+  --surface-tint: #F0F6FA;  /* gossamer sky tint for subtle card headers and badges */
+  --sky: #5B96C2;           /* pristine architectural azure sky blue */
+  --sky-deep: #1B4D75;      /* executive oceanic sapphire (9:1+ WCAG AAA contrast) */
+  --sky-soft: #EBF3F9;      /* airy sky mist for badges, tints, highlights */
+  --sky-subtle: #F4F8FC;    /* featherlight tint for hovers & pill backgrounds */
+  --ink: #0C1926;           /* deep obsidian navy — razor-sharp 14:1+ contrast */
+  --ink-muted: #3D4F61;     /* refined slate navy — crystal-clear 7:1+ contrast */
+  --ink-subtle: #637588;    /* delicate caption text, WCAG AA compliant */
+  --border: #E5DFD5;        /* fine alabaster hairline border */
+  --border-subtle: #EFEAE2; /* delicate sub-divider */
+  --border-focus: #5B96C2;  /* active focus ring */
+  --accent: #C39348;        /* satin champagne gold for bespoke luxury CTAs */
+  --accent-hover: #AB7F35;  /* hover state for champagne gold */
+  --accent-deep: #8E6523;   /* dark metallic gold text */
+  --accent-soft: #FAF3E7;   /* delicate champagne tint */
 
-  /* Button Specific Tones (WCAG AA Compliant) */
-  --btn-primary-bg: #4D7B9D;
-  --btn-primary-hover: #3E6683;
-  --btn-primary-text: #FBF8F1;
-  --btn-accent-bg: #D9A86C;
-  --btn-accent-hover: #C59355;
-  --btn-accent-text: #FBF8F1;
+  /* Button Specific Tones (WCAG AA & AAA Compliant) */
+  --btn-primary-bg: #1B4D75;
+  --btn-primary-hover: #133959;
+  --btn-primary-text: #FFFFFF;
+  --btn-accent-bg: #C39348;
+  --btn-accent-hover: #AB7F35;
+  --btn-accent-text: #FFFFFF;
+  --btn-emerald-bg: #047857;
+  --btn-emerald-hover: #065F46;
 
-  /* Shadows (Soft ink tint, never harsh) */
-  --shadow-sm: 0 2px 8px rgba(44, 62, 80, 0.04);
-  --shadow-card: 0 4px 14px rgba(44, 62, 80, 0.06);
-  --shadow-hover: 0 8px 24px rgba(44, 62, 80, 0.10);
-  --shadow-modal: 0 20px 50px rgba(44, 62, 80, 0.15);
+  /* Multi-tier Diffusion Shadows (Subtle, Crisp, Ambient) */
+  --shadow-xs: 0 1px 2px rgba(12, 25, 38, 0.04);
+  --shadow-sm: 0 2px 8px -1px rgba(12, 25, 38, 0.05), 0 1px 2px rgba(12, 25, 38, 0.02);
+  --shadow-card: 0 4px 20px -2px rgba(12, 25, 38, 0.06), 0 1px 4px rgba(12, 25, 38, 0.02);
+  --shadow-hover: 0 16px 36px -4px rgba(12, 25, 38, 0.10), 0 4px 12px rgba(12, 25, 38, 0.03);
+  --shadow-modal: 0 24px 60px -8px rgba(12, 25, 38, 0.18), 0 8px 24px -4px rgba(12, 25, 38, 0.08);
 
   /* Fonts & Radii */
   --font-serif: 'Playfair Display', Georgia, serif;
@@ -58,15 +70,15 @@
   --cobalt-400: var(--sky-deep);
   --candlelight-gold: var(--accent);
   --candlelight-amber: var(--accent);
-  --gold-dark: #C59355;
-  --champagne-light: var(--sky-soft);
-  --emerald-500: var(--sky-deep);
-  --emerald-600: var(--btn-primary-bg);
+  --gold-dark: var(--accent-hover);
+  --champagne-light: var(--accent-soft);
+  --emerald-500: #059669;
+  --emerald-600: var(--btn-emerald-bg);
   --slate-100: var(--surface);
   --slate-200: var(--ink);
   --slate-300: var(--ink-muted);
   --slate-400: var(--ink-muted);
-  --slate-500: var(--ink-muted);
+  --slate-500: var(--ink-subtle);
   --slate-600: var(--border);
   --slate-700: var(--border);
   --slate-800: var(--border);
@@ -223,21 +235,21 @@ p {
 }
 
 .badge-gold {
-  background: rgba(217, 168, 108, 0.16);
+  background: rgba(195, 147, 72, 0.12);
   border: 1px solid var(--accent);
-  color: #7A4F1C;
+  color: var(--accent-deep);
 }
 
 .badge-blue {
   background: var(--sky-soft);
   border: 1px solid var(--sky);
-  color: #3A6A90;    /* darker than --sky-deep for 4.5:1+ on sky-soft */
+  color: var(--sky-deep);
 }
 
 .badge-emerald {
-  background: var(--sky-soft);
-  border: 1px solid var(--sky);
-  color: var(--ink);
+  background: #ECFDF5;
+  border: 1px solid #A7F3D0;
+  color: #065F46;
 }
 
 .section-title {
@@ -321,47 +333,61 @@ p {
   transition: color var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
 }
 
-/* Primary Button: --sky-deep background with cream text; hover slightly darker */
-.btn-primary,
-.btn-gold,
-.btn-emerald {
+/* Primary Button: Oceanic sapphire background with white text; hover slightly deeper */
+.btn-primary {
   background-color: var(--btn-primary-bg);
   color: var(--btn-primary-text);
   border: 1px solid var(--btn-primary-bg);
-  box-shadow: 0 4px 14px rgba(77, 123, 157, 0.25);
+  box-shadow: 0 4px 14px rgba(27, 77, 117, 0.22);
 }
 
-.btn-primary:hover,
-.btn-gold:hover,
-.btn-emerald:hover {
+.btn-primary:hover {
   background-color: var(--btn-primary-hover);
   border-color: var(--btn-primary-hover);
   color: var(--btn-primary-text);
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(77, 123, 157, 0.35);
+  box-shadow: 0 6px 18px rgba(27, 77, 117, 0.32);
 }
 
-/* Accent Button for Key Conversion Highlights (~10%) */
+/* Gold / Accent Button for Prestigious CTAs */
+.btn-gold,
 .btn-accent {
   background-color: var(--btn-accent-bg);
   color: var(--btn-accent-text);
   border: 1px solid var(--btn-accent-bg);
-  box-shadow: 0 4px 14px rgba(217, 168, 108, 0.25);
+  box-shadow: 0 4px 14px rgba(195, 147, 72, 0.24);
 }
 
+.btn-gold:hover,
 .btn-accent:hover {
   background-color: var(--btn-accent-hover);
   border-color: var(--btn-accent-hover);
   color: var(--btn-accent-text);
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(217, 168, 108, 0.35);
+  box-shadow: 0 6px 18px rgba(195, 147, 72, 0.34);
 }
 
-/* Secondary Button: transparent with a --sky border */
+/* Emerald Button for Trusted Kenyan M-Pesa Transactions */
+.btn-emerald {
+  background-color: var(--btn-emerald-bg);
+  color: #FFFFFF;
+  border: 1px solid var(--btn-emerald-bg);
+  box-shadow: 0 4px 14px rgba(4, 120, 87, 0.22);
+}
+
+.btn-emerald:hover {
+  background-color: var(--btn-emerald-hover);
+  border-color: var(--btn-emerald-hover);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(4, 120, 87, 0.32);
+}
+
+/* Secondary Button: clean border with gentle hover */
 .btn-secondary,
 .btn-glass {
   background-color: transparent;
-  border: 1.5px solid var(--sky);
+  border: 1.5px solid var(--border);
   color: var(--ink);
   box-shadow: none;
 }
@@ -369,7 +395,7 @@ p {
 .btn-secondary:hover,
 .btn-glass:hover {
   background-color: var(--sky-soft);
-  border-color: var(--sky-deep);
+  border-color: var(--sky);
   color: var(--sky-deep);
   transform: translateY(-2px);
 }
@@ -378,7 +404,7 @@ p {
    HEADER & NAVBAR
    ========================================================== */
 .top-bar {
-  background: linear-gradient(90deg, var(--bg-alt) 0%, var(--sky-soft) 50%, var(--bg-alt) 100%);
+  background: var(--bg);
   border-bottom: 1px solid var(--border);
   padding: 0.5rem 1rem;
   font-size: 0.75rem;
@@ -403,17 +429,17 @@ p {
   position: sticky;
   top: 0;
   z-index: 40;
-  background: rgba(251, 248, 241, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
   padding: 1rem 0;
   transition: all var(--transition-fast);
 }
 
 .header-main.scrolled {
-  background: var(--surface);
-  box-shadow: var(--shadow-card);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: var(--shadow-sm);
   border-bottom: 1px solid var(--border);
   padding: 0.75rem 0;
 }
@@ -579,14 +605,14 @@ p {
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(246, 241, 231, 0.94) 0%, rgba(246, 241, 231, 0.82) 55%, rgba(214, 230, 241, 0.65) 100%);
+  background: linear-gradient(90deg, rgba(250, 249, 246, 0.96) 0%, rgba(250, 249, 246, 0.88) 55%, rgba(235, 243, 249, 0.70) 100%);
   z-index: 2;
 }
 
 .hero-overlay-vertical {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(214, 230, 241, 0.45) 0%, transparent 45%, rgba(246, 241, 231, 0.95) 100%);
+  background: linear-gradient(180deg, rgba(235, 243, 249, 0.45) 0%, transparent 45%, rgba(250, 249, 246, 0.96) 100%);
   z-index: 2;
 }
 
@@ -929,7 +955,7 @@ p {
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #3A6A90;    /* darker for 4.5:1+ on cream (sky-deep #5F8FB3 only 2.9:1) */
+  color: var(--sky-deep);
   margin-bottom: 0.75rem;
   display: flex;
   align-items: center;

@@ -196,15 +196,15 @@ body.admin-body {
   padding: 0.15rem 0.45rem;
   border-radius: 999px;
   background: var(--sky-soft);
-  color: #3A6A90;   /* darker than --sky-deep: 4.5:1+ on sky-soft */
+  color: var(--sky-deep);
   border: 1px solid var(--sky);
   font-weight: 700;
 }
 
 .admin-nav-badge.badge-emerald {
-  background: var(--sky-soft);
-  color: #3A6A90;
-  border-color: var(--sky);
+  background: #ECFDF5;
+  color: #065F46;
+  border-color: #A7F3D0;
 }
 
 /* Sidebar Footer */
@@ -597,30 +597,30 @@ body.admin-body {
 
 .status-pill.status-confirmed,
 .status-pill.status-operational {
-  background: rgba(16, 185, 129, 0.15);
-  color: #047857;   /* dark green 5.1:1 — was #34d399 which fails */
-  border: 1px solid rgba(16, 185, 129, 0.4);
+  background: #ECFDF5;
+  color: #065F46;
+  border: 1px solid #A7F3D0;
 }
 
 .status-pill.status-new,
 .status-pill.status-in-transit {
   background: var(--sky-soft);
   color: var(--sky-deep);
-  border: 1px solid var(--sky);
+  border: 1px solid #BDD8ED;
 }
 
 .status-pill.status-in-discussion,
 .status-pill.status-deployed {
-  background: rgba(245, 158, 11, 0.15);
-  color: #78450A;   /* dark amber — was #fbbf24 which fails (2.1:1) */
-  border: 1px solid rgba(245, 158, 11, 0.4);
+  background: #FFFBEB;
+  color: #92400E;
+  border: 1px solid #FDE68A;
 }
 
 .status-pill.status-deposit-pending,
 .status-pill.status-under-inspection {
-  background: rgba(239, 68, 68, 0.15);
-  color: #991b1b;   /* dark red — was #f87171 which fails (2.0:1) */
-  border: 1px solid rgba(239, 68, 68, 0.4);
+  background: #FEF2F2;
+  color: #991B1B;
+  border: 1px solid #FECACA;
 }
 
 /* Filter Bar */
@@ -1135,21 +1135,21 @@ body.admin-body {
 }
 
 .followup-urgent {
-  background: rgba(239, 68, 68, 0.15);
-  color: #b91c1c;
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: #FEF2F2;
+  color: #991B1B;
+  border: 1px solid #FECACA;
 }
 
 .followup-healthy {
-  background: rgba(16, 185, 129, 0.15);
-  color: #047857;
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  background: #ECFDF5;
+  color: #065F46;
+  border: 1px solid #A7F3D0;
 }
 
 .followup-active {
-  background: rgba(217, 168, 108, 0.15);
-  color: #9a6524;
-  border: 1px solid rgba(217, 168, 108, 0.3);
+  background: #FFFBEB;
+  color: #92400E;
+  border: 1px solid #FDE68A;
 }
 
 /* Analytics Metric Strip */

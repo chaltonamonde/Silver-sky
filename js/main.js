@@ -830,7 +830,7 @@ function initMpesaModal() {
           particleCount: 120,
           spread: 80,
           origin: { y: 0.6 },
-          colors: ['#D9A86C', '#5F8FB3', '#047857', '#8FB8D6']  /* theme-consistent palette */
+          colors: ['#C39348', '#1B4D75', '#047857', '#5B96C2', '#FAF9F6']  /* elevated luxury palette */
         });
       }
     }, 2000);
